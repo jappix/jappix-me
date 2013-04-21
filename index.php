@@ -211,16 +211,7 @@ if($user) {
 			include('./php/avatar.php');
 			exit;
 		}
-		if(!$exists_user)
-			echo 'no user'."\n";
-		if(!$exists_profile)
-			echo 'no profile'."\n";
-		if(!$exists_vcard)
-			echo 'no vcard'."\n";
-		if(!$exists_microblog)
-			echo 'no microblog'."\n";
-		if(!$exists_geoloc)
-			echo 'no geoloc'."\n";
+		
 		// If user does not exist, abort
 		if(!$exists_user || (!$exists_profile && !$exists_vcard && !$exists_microblog && !$exists_geoloc)) {
 			$page = '404';
