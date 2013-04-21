@@ -37,9 +37,9 @@
 	<p><span class="upper"><b>+1</b> <em><?php echo htmlspecialchars($user_fn); ?></em>'s profile page:</span><g:plusone size="medium" href="<?php echo $path_root_protocol.'://'.$path_root_domain.'/'.htmlspecialchars($user); ?>"></g:plusone></p>
 </div>
 
-<h4>Mail your friends!</h4>
+<h4>E-Mail your friends!</h4>
 <div class="tabulate">
-	<p>Mail your friends the profile page of <em><?php echo htmlspecialchars($user_fn); ?></em>: <b><a href="mailto:?subject=<?php echo rawurlencode($user_fn." on Jappix Me"); ?>&amp;body=<?php echo rawurlencode("Hey!\n\nHave a look at ".$user_fn."'s profile on Jappix Me!\nRight there: ".$path_root_protocol."://".$path_root_domain."/".$user."\n\nCheers."); ?>" target="_blank">create the mail</a></b></p>
+	<p>E-Mail your friends the profile page of <em><?php echo htmlspecialchars($user_fn); ?></em>: <b><a href="mailto:?subject=<?php echo rawurlencode($user_fn." on Jappix Me"); ?>&amp;body=<?php echo rawurlencode("Hey!\n\nHave a look at ".$user_fn."'s profile on Jappix Me!\nRight there: ".$path_root_protocol."://".$path_root_domain."/".$user."\n\nCheers."); ?>" target="_blank">create the e-mail</a></b></p>
 </div>
 
 <h4>Grandma <em>way of sharing</em></h4>
