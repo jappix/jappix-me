@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 // Read the user vCard
 $user_mail = $user_phone = $user_postal = array();

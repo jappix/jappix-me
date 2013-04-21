@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 // Widgets
 $widget_url = '';

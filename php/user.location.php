@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 // Get the user current location
 $current_location = getUserCurrentLocation($user_vcard, $user_geoloc);

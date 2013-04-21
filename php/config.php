@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 // Configuration cache
 $CONFIG_CACHE = array();

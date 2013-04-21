@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 /* CACHE MANAGEMENT FUNCTIONS */
 

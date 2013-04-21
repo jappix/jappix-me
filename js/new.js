@@ -76,7 +76,7 @@ function tellTheBot() {
 	
 	$.post('/new/bot', {usr: con.username, srv: con.domain, pwd: con.pass}, function(data) {
 		// Any error?
-		if(!data.match(/OK/)) {
+		if(data != 'OK') {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(data);
 			
 			return;

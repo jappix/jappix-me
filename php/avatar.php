@@ -8,9 +8,6 @@
  * Author: Valérian Saliou
  */
 
-?>
-
-<?php
 
 // Avatar data
 $avatar_file = $avatar_type = '';
