@@ -1,0 +1,66 @@
+<!--
+
+	Jappix Me - Your public profile, anywhere
+	Configuration file
+	
+	License: AGPL
+	Author: Valérian Saliou
+	
+	IMPORTANT: check that this file cannot be accessed from Web!
+
+-->
+<jappix xmlns="jappix:me:config">
+	<!-- 
+		Bot configuration
+		Create a XID for Jappix Me bot purpose only!
+	-->
+	<bot>
+		<!-- bot username -->
+		<username>me</username>
+
+		<!-- bot host domain -->
+		<domain>server.tld</domain>
+
+		<!-- bot password -->
+		<password>BOT_PASSWORD</password>
+	</bot>
+
+	<!--
+		XMPP
+		Client XMPP access
+	-->
+	<xmpp>
+		<!-- anonymous host domain -->
+		<domain>anonymous.server.tld</domain>
+
+		<!-- bosh relative path (proxy) -->
+		<bosh>/bosh</bosh>
+	</xmpp>
+
+	<!--
+		App configuration
+		Website behavior
+	-->
+	<app>
+		<!-- root path -->
+		<dir>/var/www/jappix/me/root</dir>
+
+		<!-- production/development -->
+		<mode>development</mode>
+	</app>
+
+	<!--
+		Analytics
+		Uses Piwik tracking system
+	-->
+	<analytics>
+		<!-- true/false -->
+		<enable>true</enable>
+
+		<!-- only domain name, no url -->
+		<server>piwik.server.tld</server>
+
+		<!-- tracking id -->
+		<id>42</id>
+	</analytics>
+</jappix>
