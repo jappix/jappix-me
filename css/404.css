@@ -1,0 +1,49 @@
+/*
+ * Jappix Me - Your public profile, anywhere
+ * Not found page
+ * 
+ * License: AGPL
+ * Author: Valérian Saliou
+ */
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: white;
+	font: normal 16px Palatino, Georgia, "Times New Roman", serif;
+}
+
+a {
+	color: black;
+}
+
+#wrapper {
+	text-align: center;
+	height: 214px;
+	width: 100%;
+	margin-top: -107px;
+	position: absolute;
+	top: 50%;
+}
+
+#wrapper .logo {
+	background: url(/img/logo_medium.png) no-repeat;
+	height: 101px;
+	width: 500px;
+	margin: 0 auto;
+	display: block;
+}
+
+#wrapper h1 {
+	font-size: 2em;
+	margin-top: 50px;
+}
+
+#wrapper h4 {
+	font-size: 1em;
+	margin-top: 10px;
+}

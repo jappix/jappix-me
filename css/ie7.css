@@ -1,0 +1,70 @@
+/*
+ * Jappix Me - Your public profile, anywhere
+ * Internet Explorer 7 fixes
+ * 
+ * License: AGPL
+ * Author: Valérian Saliou
+ */
+
+
+.disabled * {
+	filter: alpha(opacity=20) !important;
+}
+
+#top {
+	padding-bottom: 0 !important;
+}
+
+#top .desc {
+	margin-top: 4px !important;
+}
+
+#top .button.privacy:hover,
+#top .button.privacy:focus,
+#top .button.feed:hover,
+#top .button.feed:focus {
+	padding-left: 21px !important;
+}
+
+#top .button.privacy:hover .button_center,
+#top .button.privacy:focus .button_center,
+#top .button.feed:hover .button_center,
+#top .button.feed:focus .button_center {
+	display: none !important;
+}
+
+#content .step#step1 {
+	margin-top: 0 !important;
+}
+
+#content .step .stepped form label input {
+	margin-top: -21px !important;
+}
+
+#content .sidebar a.channel {
+	background-position: 11px center !important;
+}
+
+#content .sidebar a.pictures {
+	background-position: -189px center !important;
+}
+
+#content .sidebar a.location {
+	background-position: -389px center !important;
+}
+
+#content .sidebar a.contact {
+	background-position: -589px center !important;
+}
+
+#content .sidebar a.about {
+	background-position: -789px center !important;
+}
+
+#content .sidebar a.share {
+	background-position: -989px center !important;
+}
+
+#content .sidebar a.export {
+	background-position: -1189px center !important;
+}

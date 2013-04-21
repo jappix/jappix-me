@@ -1,0 +1,54 @@
+/*
+ * Jappix Me - Your public profile, anywhere
+ * Internet Explorer 6 fixes
+ * 
+ * License: AGPL
+ * Author: Valérian Saliou
+ */
+
+
+noscript span.noscript span {
+	background-image: url(/img/warning.png) !important;
+}
+
+#top .button.privacy {
+	background-image: url(/img/privacy.gif) !important;
+}
+
+#top .button.feed {
+	background-image: url(/img/feed.gif) !important;
+}
+
+#quicklook {
+	overflow: hidden !important;
+}
+
+#quicklook .avatarize {
+	margin-left: 17px !important;
+}
+
+#quicklook .avatarize .avatar {
+	margin-bottom: 0 !important;
+}
+
+#quicklook .infos {
+	margin-left: 0 !important;
+}
+
+#quicklook .actions a {
+	background-image: url(/img/quicklook.gif) !important;
+}
+
+#content .sidebar a {
+	background-image: url(/img/sidebar.gif) !important;
+}
+
+#content .wrapper.channel .tabulate .right .attached a.thumb img,
+#content .wrapper.pictures a.thumb img {
+	width: 140px !important;
+	height: 105px !important;
+}
+
+#content .wrapper.pictures a.medium img {
+	width: 736px !important;
+}

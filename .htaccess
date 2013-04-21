@@ -1,0 +1,17 @@
+# Jappix Me - Your public profile, anywhere
+# Apache configuration file
+
+# License: AGPL
+# Author: Valérian Saliou
+
+
+# Requires mod_rewrite
+RewriteEngine On
+RewriteBase /
+RewriteRule ^([^\/]+@[^\/]+|new|privacy|cache|invite|pending|py)(([\/]+)(.*))?$ index.php?u=$1&s=$4 [L]
+
+# Requires mod_access
+<Files config.xml>
+	Order allow,deny
+	Deny from all
+</Files>

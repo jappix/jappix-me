@@ -1,0 +1,307 @@
+/*
+ * Jappix Me - Your public profile, anywhere
+ * Profile privacy page
+ * 
+ * License: AGPL
+ * Author: Valérian Saliou
+ */
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: white;
+	font: normal 16px Arial, Helvetica, Verdana, sans-serif;
+	min-width: 980px;
+}
+
+a {
+	color: black;
+	outline-style: none;
+	text-decoration: underline;
+}
+
+p {
+	margin-bottom: 8px;
+}
+
+input.placeholder,
+textarea.placeholder {
+	color: #999999 !important;
+}
+
+input:placeholder,
+textarea:placeholder {
+	color: #999999 !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	color: #999999 !important;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+	color: #999999 !important;
+}
+
+noscript span.noscript,
+noscript span.marginizer {
+	font-size: 0.8em;
+	padding: 6px 0;
+	display: block;
+}
+
+noscript span.marginizer {
+	visibility: hidden;
+}
+
+noscript span.noscript {
+	background: #500000 url(/img/bg_noscript.png) left top repeat-x;
+	border-bottom: 1px solid #1d0000;
+	z-index: 20;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	box-shadow: 0 0 3px #575757;
+	-moz-box-shadow: 0 0 3px #575757;
+	-webkit-box-shadow: 0 0 3px #575757;
+}
+
+noscript span.noscript span {
+	background: url(/img/warning.png) 0 -1px no-repeat;
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	padding-left: 25px;
+	display: block;
+}
+
+button,
+input.submit,
+.button {
+	background: black;
+	border: none;
+	color: white;
+	font-weight: bold;
+	font-size: 0.8em;
+	text-decoration: none;
+	margin: 10px 0 5px 6px;
+	padding: 6px 9px;
+	cursor: pointer;
+	float: left;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+button:hover,
+button:focus,
+input.submit:hover,
+input.submit:focus,
+.button:hover,
+.button:focus {
+	text-decoration: underline;
+}
+
+button {
+	background: #5c0c0c;
+}
+
+#top .button {
+	height: 16px;
+	margin: 1px 0 0 0;
+	float: right;
+}
+
+#top .button .button_center {
+	height: 16px;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+.wrapped {
+	width: 950px;
+	margin: 0 auto;
+}
+
+.clear {
+	clear: both;
+}
+
+.tabulate {
+	border-color: #d0d0d0;
+	border-style: solid;
+	border-width: 0 0 1px 3px;
+	margin: 30px 0;
+	padding: 5px 0 15px 10px;
+}
+
+.tabulate:hover {
+	border-color: #969696;
+	cursor: default;
+}
+
+.subtabulate {
+	border-left: 2px solid black;
+	margin: 18px 0 18px 4px;
+	padding: 1px 0 1px 12px;
+}
+
+.disabled {
+	opacity: 0.2;
+	filter: alpha(opacity=20);
+}
+
+#description {
+	display: none;
+}
+
+#top {
+	padding: 16px 0;
+}
+
+#top .logo {
+	background: url(/img/logo_small.png) no-repeat;
+	width: 148px;
+	height: 30px;
+	margin-top: -1px;
+	float: left;
+}
+
+#top .desc {
+	font: italic 1em Palatino, Georgia, "Times New Roman", serif;
+	margin-left: 20px;
+	float: left;
+}
+
+#top .desc .desc_center {
+	height: 30px;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#explain {
+	background: #292929 url(/img/bg_explain.png) left top repeat-x;
+	border-bottom: 1px solid black;
+	color: white;
+	font-size: 0.9em;
+	text-shadow: 1px 1px 2px black;
+	padding: 10px 0;
+	box-shadow: 0 0 15px #b0b0b0;
+	-moz-box-shadow: 0 0 15px #b0b0b0;
+	-webkit-box-shadow: 0 0 15px #b0b0b0;
+}
+
+#content {
+	font-size: 0.9em;
+	margin-top: 40px;
+}
+
+#content .step {
+	margin-bottom: 15px;
+}
+
+#content .step .number {
+	color: #d0d0d0;
+	font-size: 6em;
+	font-weight: bold;
+	width: 60px;
+	margin-left: 20px;
+	float: left;
+}
+
+#content .step:hover .number {
+	color: #969696;
+}
+
+#content .step .stepped {
+	width: 820px;
+	float: right;
+}
+
+#content .step .stepped h1 {
+	font-size: 2em;
+	margin-bottom: 10px;
+}
+
+#content .step .stepped label {
+	font-weight: bold;
+	padding-top: 5px;
+	display: block;
+}
+
+#content .step .stepped form label {
+	width: 320px;
+	margin-top: 8px;
+	display: block;
+	clear: both;
+}
+
+#content .step .stepped form label input {
+	border: 1px solid black;
+	font-size: 0.9em;
+	width: 200px;
+	margin-top: -4px;
+	padding: 3px 6px 4px 6px;
+	float: right;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+#content .step .stepped form label input:focus {
+	box-shadow: 0 0 5px #b0b0b0;
+	-moz-box-shadow: 0 0 5px #b0b0b0;
+	-webkit-box-shadow: 0 0 5px #b0b0b0;
+}
+
+#content .step .stepped .status {
+	color: #414141;
+	font-style: italic;
+	margin: 16px 0 0 20px;
+	float: left;
+	display: none;
+}
+
+#content .step .stepped .status.network {
+	background: url(/img/connect.gif) left center no-repeat;
+	padding-left: 22px;
+}
+
+#content .step .stepped .subtabulate p {
+	margin-bottom: 2px;
+}
+
+#content .step .stepped .subtabulate label {
+	margin-left: 4px;
+}
+
+#content .step .stepped .subtabulate input {
+	margin-right: 4px;
+}
+
+#content .step .stepped .saveit {
+	display: none;
+}
+
+#foot {
+	border-top: 1px solid #e7e7e7;
+	margin-top: 60px;
+	padding: 10px 0;
+	font-size: 0.8em;
+	clear: both;
+}
+
+#foot span {
+	padding: 2px 0;
+}
+
+#foot span.right {
+	background: url(/img/foot.png) left center no-repeat;
+	padding-left: 20px;
+	float: right;
+}

@@ -1,0 +1,322 @@
+/*
+ * Jappix Me - Your public profile, anywhere
+ * Home page
+ * 
+ * License: AGPL
+ * Author: Valérian Saliou
+ */
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: white;
+	font: normal 16px Arial, Helvetica, Verdana, sans-serif;
+	min-width: 980px;
+}
+
+a {
+	color: black;
+	outline-style: none;
+	text-decoration: underline;
+}
+
+p {
+	margin-bottom: 16px;
+}
+
+img {
+	border: 0 none;
+}
+
+noscript span.noscript,
+noscript span.marginizer {
+	font-size: 0.8em;
+	padding: 6px 0;
+	display: block;
+}
+
+noscript span.marginizer {
+	visibility: hidden;
+}
+
+noscript span.noscript {
+	background: #500000 url(/img/bg_noscript.png) left top repeat-x;
+	border-bottom: 1px solid #1d0000;
+	z-index: 20;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	box-shadow: 0 0 3px #575757;
+	-moz-box-shadow: 0 0 3px #575757;
+	-webkit-box-shadow: 0 0 3px #575757;
+}
+
+noscript span.noscript span {
+	background: url(/img/warning.png) 0 -1px no-repeat;
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	padding-left: 25px;
+	display: block;
+}
+
+#description {
+	display: none;
+}
+
+#top .button,
+#content .button {
+	background: black;
+	color: white;
+	font-weight: bold;
+	font-size: 0.8em;
+	text-decoration: none;
+	height: 16px;
+	margin-top: 1px;
+	padding: 6px 9px;
+	float: right;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+#top .button:hover,
+#top .button:focus,
+#content .button:hover,
+#content .button:focus {
+	text-decoration: underline;
+}
+
+#top .button .button_center,
+#content .button .button_center {
+	height: 16px;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#top .button.new,
+#content .button.new {
+	background: #5c0c0c;
+}
+
+#top .button.privacy {
+	background-repeat: no-repeat;
+	background-position: 7px center;
+	margin-right: 6px;
+	padding-left: 21px;
+}
+
+#top .button.privacy .button_center {
+	display: none;
+}
+
+#top .button.privacy:hover,
+#top .button.privacy:focus {
+	padding-left: 30px;
+}
+
+#top .button.privacy:hover .button_center,
+#top .button.privacy:focus .button_center {
+	display: table-cell;
+}
+
+#top .button.privacy {
+	background-image: url(/img/privacy.png);
+}
+
+.wrapped {
+	width: 950px;
+	margin: 0 auto;
+}
+
+.clear {
+	clear: both;
+}
+
+#top {
+	padding: 16px 0;
+}
+
+#top .logo {
+	background: url(/img/logo_small.png) no-repeat;
+	width: 148px;
+	height: 30px;
+	margin-top: -1px;
+	float: left;
+}
+
+#top .desc {
+	font: italic 1em Palatino, Georgia, "Times New Roman", serif;
+	margin-left: 20px;
+	float: left;
+}
+
+#top .desc .desc_center {
+	height: 30px;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#explain {
+	background: #292929 url(/img/bg_explain.png) left top repeat-x;
+	border-bottom: 1px solid black;
+	color: white;
+	font-size: 0.9em;
+	text-shadow: 1px 1px 2px black;
+	padding: 10px 0;
+	box-shadow: 0 0 15px #b0b0b0;
+	-moz-box-shadow: 0 0 15px #b0b0b0;
+	-webkit-box-shadow: 0 0 15px #b0b0b0;
+}
+
+#content {
+	font-size: 0.9em;
+	margin-top: 40px;
+}
+
+#content .left {
+	text-align: justify;
+	width: 320px;
+	padding-bottom: 50px;
+	float: left;
+}
+
+#content .left h4 {
+	font: italic bold 1.9em Palatino, Georgia, "Times New Roman", serif;
+	margin-bottom: 25px;
+}
+
+#content .left em {
+	font: italic bold 1.2em Palatino, Georgia, "Times New Roman", serif;
+}
+
+#content .left .button {
+	font-size: 1.2em;
+	height: 25px;
+	margin: 20px 0 0 20px;
+	padding: 6px 20px;
+	float: left;
+}
+
+#content .left .button .button_center {
+	height: 25px;
+}
+
+#content .left .random {
+	margin-top: 50px;
+}
+
+#content .left .random a img {
+	margin: 1px;
+	height: 40px;
+	width: 40px;
+}
+
+#content .right {
+	width: 580px;
+	padding: 30px 0 50px 0;
+	float: right;
+}
+
+#content .right a img {
+	border: 3px solid white;
+	box-shadow: 0 0 15px #0b0b0b;
+	-moz-box-shadow: 0 0 15px #0b0b0b;
+	-webkit-box-shadow: 0 0 15px #0b0b0b;
+}
+
+#content .right a.big img {
+	width: 400px;
+	height: 229px;
+	margin-left: 15px;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+	rotation: 352deg;
+	-webkit-transform: rotate(352deg);
+	-moz-transform: rotate(352deg);
+	-o-transform:rotate(352deg);
+	-ms-transform:rotate(352deg);
+}
+
+#content .right a.big img:hover,
+#content .right a.big:focus img {
+	rotation: 353deg;
+	-webkit-transform: rotate(353deg);
+	-moz-transform: rotate(353deg);
+	-o-transform:rotate(353deg);
+	-ms-transform:rotate(353deg);
+}
+
+#content .right a.medium img {
+	width: 350px;
+	height: 200px;
+	margin: -60px 0 0 110px;
+	rotation: 5deg;
+	-webkit-transform: rotate(5deg);
+	-moz-transform: rotate(5deg);
+	-o-transform:rotate(5deg);
+	-ms-transform:rotate(5deg);
+}
+
+#content .right a.medium img:hover,
+#content .right a.medium:focus img {
+	rotation: 4deg;
+	-webkit-transform: rotate(4deg);
+	-moz-transform: rotate(4deg);
+	-o-transform:rotate(4deg);
+	-ms-transform:rotate(4deg);
+}
+
+#content .right a.small img {
+	width: 300px;
+	height: 171px;
+	margin: -150px 0 0 260px;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	rotation: 15deg;
+	-webkit-transform: rotate(15deg);
+	-moz-transform: rotate(15deg);
+	-o-transform:rotate(15deg);
+	-ms-transform:rotate(15deg);
+}
+
+#content .right a.small img:hover,
+#content .right a.small:focus img {
+	rotation: 14deg;
+	-webkit-transform: rotate(14deg);
+	-moz-transform: rotate(14deg);
+	-o-transform:rotate(14deg);
+	-ms-transform:rotate(14deg);
+}
+
+#content .right a img:hover,
+#content .right a:focus img {
+	border-color: #cdcdcd;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	box-shadow: 0 0 30px #9a9a9a;
+	-moz-box-shadow: 0 0 30px #0b0b0b;
+	-webkit-box-shadow: 0 0 30px #0b0b0b;
+}
+
+#foot {
+	border-top: 1px solid #e7e7e7;
+	margin-top: 60px;
+	padding: 10px 0;
+	font-size: 0.8em;
+	clear: both;
+}
+
+#foot span {
+	padding: 2px 0;
+}
+
+#foot span.right {
+	background: url(/img/foot.png) left center no-repeat;
+	padding-left: 20px;
+	float: right;
+}
