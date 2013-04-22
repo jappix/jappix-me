@@ -11,7 +11,7 @@ Author: Valerian Saliou
 import xmpp, os, shutil, time, phpserialize, config
 
 BASE_DIR = config.path()
-
+print BASE_DIR
 
 ###############
 ### PENDING ###
