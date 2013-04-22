@@ -44,6 +44,9 @@
 	<app>
 		<!-- production/development -->
 		<mode>development</mode>
+
+		<!-- jappix static host (install jappix or use static.jappix.com) -->
+		<static>static.server.tld</static>
 	</app>
 
 	<!--
