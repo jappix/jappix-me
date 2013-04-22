@@ -4,12 +4,12 @@ Jappix Me Installation
 1. Prerequisites
 ----------------
 
--> Apache or lighttpd
--> PHP 5+
--> Python 2.7+
--> A Linux OS
+* Apache or lighttpd
+* PHP 5+
+* Python 2.7+
+* A Linux OS
 
--> xmpppy library (http://xmpppy.sourceforge.net/)
+* xmpppy library (http://xmpppy.sourceforge.net/)
 
 
 2. Deploy Jappix Me
