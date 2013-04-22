@@ -3,10 +3,12 @@ Jappix Me
 
 Jappix Me, the very first XMPP public profile viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
+
 License
 -------
 
 Jappix Me is released under the terms of the AGPL license. See COPYING for details.
+
 
 Disclaimer
 ----------
@@ -15,16 +17,27 @@ You accept as a Jappix Me service provider that you have all the responsibility 
 
 Jappix Me cannot be held as responsible from any lost of leak of data, due to a bug, hack or wrong use.
 
+
 Installation
 ------------
 
 Please refer to the installation instructions that are located in the INSTALL file to process the Jappix Me installation.
+
 
 Links
 -----
 
 * Jappix Me official service: https://me.jappix.com/
 * Jappix official support: http://jappix.pro/
+
+
+Mirrors
+-------
+
+In case GitHub is down, here is a list of available mirrors:
+
+* Git read-only mirror: git clone https://code.frenchtouch.pro/jappix/jappix-me.git
+
 
 MUC Links
 ---------
