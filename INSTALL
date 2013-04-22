@@ -55,6 +55,8 @@ Jappix Me only requires a dedicated XMPP account on your XMPP server to work. Th
 
 Simply open ./config.xml and fill in the file with the required information.
 
+Don't forget to set app mode to production once Jappix Me is working well with no error (development prints errors).
+
 
 4. Launch Jappix Me bot
 -----------------------
