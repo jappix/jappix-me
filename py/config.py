@@ -24,7 +24,7 @@ def read():
 	# Not already cached?
 	if not CONFIG_CACHE:
 		# Open XML configuration file
-		xml_doc = minidom.parse('../config.xml')
+		xml_doc = minidom.parse(BASE_DIR + '/config.xml')
 		node_jappix = xml_doc.getElementsByTagName('jappix')[0]
 
 		# Populate configuration cache array
