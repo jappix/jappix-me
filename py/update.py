@@ -10,7 +10,7 @@ Author: Valerian Saliou
 
 import xmpp, os, shutil, time, config
 
-BASE_DIR = config.get('app', 'dir')
+BASE_DIR = os.path.realpath(__file__) + '../'
 
 
 #############
