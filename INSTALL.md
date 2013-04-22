@@ -1,12 +1,5 @@
-Jappix Me - Your public profile, anywhere
-Project install
-
-License: AGPL
-Author: Valérian Saliou
-
-
-This is the installation help for Jappix Me.
---------------------------------------------
+Jappix Me Installation
+======================
 
 1. Prerequisites
 ----------------
