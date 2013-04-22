@@ -11,6 +11,8 @@ Author: Valerian Saliou
 import os
 from xml.dom import minidom
 
+BASE_DIR = path()
+
 
 ############
 ### READ ###
