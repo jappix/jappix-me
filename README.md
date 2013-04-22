@@ -1,5 +1,5 @@
-Jappix Me
-=========
+Jappix Me - Your public profile, anywhere
+=========================================
 
 Jappix Me, the very first XMPP public profile viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
