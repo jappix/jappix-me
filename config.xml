@@ -52,7 +52,7 @@
 	-->
 	<analytics>
 		<!-- true/false -->
-		<enable>true</enable>
+		<enable>false</enable>
 
 		<!-- only domain name, no url -->
 		<server>piwik.server.tld</server>
