@@ -34,16 +34,17 @@ You will just need to setup a proxy pass from /bosh to your BOSH server.
 
 For those using lighttpd, here is the configuration you should add:
 
-$HTTP["host"] == "me.jappix.com" {
-        server.document-root = "/var/www/me.jappix.com"
-        url.rewrite-once = ( "^/([^\/]+@[^\/]+|new|privacy|cache|invite|pending|py)(([\/]+)(.*))?$" => "/index.php?u=$1&s=$4",
-                             "^/bosh(.*)?" => "/http-bind$1" )
-        proxy.server = ( "bosh" => (( "host" => "127.0.0.1", "port" => 5280 )))
-        expire.url = ( "/css/" => "access plus 1 days",
-                       "/js/" => "access plus 1 days",
-                       "/img/" => "access plus 1 months" )
-        server.error-handler-404 = "/index.php?s=404"
-}
+	$HTTP["host"] == "me.jappix.com" {
+	        server.document-root = "/var/www/me.jappix.com"
+	        
+	        url.rewrite-once = ( "^/([^\/]+@[^\/]+|new|privacy|cache|invite|pending|py)(([\/]+)(.*))?$" => "/index.php?u=$1&s=$4", "^/bosh(.*)?" => "/http-bind$1" )
+	        proxy.server = ( "bosh" => (( "host" => "127.0.0.1", "port" => 5280 )))
+	        
+	        expire.url = ( "/css/" => "access plus 1 days",
+	                       "/js/" => "access plus 1 days",
+	                       "/img/" => "access plus 1 months" )
+	        server.error-handler-404 = "/index.php?s=404"
+	}
 
 Don't forget to tune it so that everything is fine with your server configuration (/bosh is a proxy to your BOSH server).
 
