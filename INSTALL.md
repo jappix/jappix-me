@@ -64,9 +64,9 @@ Open your crontab file: crontab -e
 
 Then, paste these lines:
 
-# Jappix Me bot
-*/1 * * * * python /var/www/me.jappix.com/py/pending.py >>/dev/null
-*/5 * * * * python /var/www/me.jappix.com/py/update.py >>/dev/null
+	# Jappix Me bot
+	*/1 * * * * python /var/www/me.jappix.com/py/pending.py >>/dev/null
+	*/5 * * * * python /var/www/me.jappix.com/py/update.py >>/dev/null
 
 Don't forget to replace the absolute path to your Jappix Me base dir so that the scripts can be launched.
 
