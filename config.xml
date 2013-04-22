@@ -42,9 +42,6 @@
 		Website behavior
 	-->
 	<app>
-		<!-- root path -->
-		<dir>/var/www/jappix/me/root</dir>
-
 		<!-- production/development -->
 		<mode>development</mode>
 	</app>
