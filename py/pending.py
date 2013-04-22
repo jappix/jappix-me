@@ -10,7 +10,7 @@ Author: Valerian Saliou
 
 import xmpp, os, shutil, time, phpserialize, config
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__)) + '..'
+BASE_DIR = config.path()
 
 
 ###############

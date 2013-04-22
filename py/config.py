@@ -8,6 +8,7 @@ Author: Valerian Saliou
 
 '''
 
+import os
 from xml.dom import minidom
 
 
@@ -57,3 +58,7 @@ def get(group, field):
 		return CONFIG_CACHE[group][field]
 	
 	return False
+
+# Get running path
+def path():
+	return os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
