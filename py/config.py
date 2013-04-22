@@ -11,8 +11,6 @@ Author: Valerian Saliou
 import os
 from xml.dom import minidom
 
-BASE_DIR = path()
-
 
 ############
 ### READ ###
@@ -26,7 +24,7 @@ def read():
 	# Not already cached?
 	if not CONFIG_CACHE:
 		# Open XML configuration file
-		xml_doc = minidom.parse(BASE_DIR + '/config.xml')
+		xml_doc = minidom.parse(path() + '/config.xml')
 		node_jappix = xml_doc.getElementsByTagName('jappix')[0]
 
 		# Populate configuration cache array
