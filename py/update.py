@@ -56,6 +56,8 @@ def need_update():
 
 # Gets the vCard
 def get_vcard(session, user):
+	print "[update:vcard] Getting vcard for " + user + "..."
+
 	vcard = xmpp.Node('vCard', attrs={'xmlns': xmpp.NS_VCARD})
 	iq = xmpp.Protocol('iq', user, 'get', payload=[vcard])
 
@@ -80,6 +82,8 @@ def handle_vcard(session, stanza):
 
 # Gets the microblog
 def get_microblog(session, user):
+	print "[update:microblog] Getting microblog for " + user + "..."
+
 	items = xmpp.Node('items', attrs={'node': 'urn:xmpp:microblog:0'})
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[items])
 	iq = xmpp.Protocol('iq', user, 'get', payload=[pubsub])
@@ -105,6 +109,8 @@ def handle_microblog(session, stanza):
 
 # Gets the geoloc
 def get_geoloc(session, user):
+	print "[update:geoloc] Getting geoloc for " + user + "..."
+
 	items = xmpp.Node('items', attrs={'node': 'http://jabber.org/protocol/geoloc', 'max_items': '1'})
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[items])
 	iq = xmpp.Protocol('iq', user, 'get', payload=[pubsub])
@@ -157,8 +163,6 @@ if __name__ == '__main__':
 			get_microblog(con, user)
 			get_geoloc(con, user)
 			con.Process(1)
-
-			print "[update:main] Updated " + user + "..."
 		
 		# Then, let it run 1 minute max
 		for i in range(60):
@@ -168,6 +172,6 @@ if __name__ == '__main__':
 
 		con.disconnect()
 
-		print "[update:main] Disconnected from bot."
+		print "[update:main] Disconnected from bot. Bye Bye."
 	else:
 		print "[update:main] Profiles are up to date. Yay!"
