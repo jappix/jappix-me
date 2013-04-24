@@ -27,6 +27,8 @@ def need_pending():
 		if user.find('@') == -1:
 			continue
 		
+		print "[pending:main] Processing pending user " + user + "..."
+
 		current_pending = BASE_DIR + '/pending/' + user
 		current_cache = BASE_DIR + '/cache/' + user
 		current_file = open(current_pending, 'r')
@@ -38,6 +40,8 @@ def need_pending():
 		
 		if login(current_data['usr'], current_data['srv'], current_data['pwd']):
 			if current_data['type'] == 'new':
+				print "[pending:new] Creating new user " + user + "..."
+
 				if not os.path.exists(current_cache):
 					os.mkdir(current_cache)
 					os.mkdir(current_cache + '/raw')
@@ -62,10 +66,14 @@ def need_pending():
 			
 			elif current_data['type'] == 'privacy':
 				if current_data['remove'] == '1':
+					print "[pending:remove] Removing user " + user + "..."
+
 					if os.path.exists(current_cache):
 						shutil.rmtree(current_cache)
 				
 				else:
+					print "[pending:privacy] Updating privacy settings for user " + user + "..."
+
 					if os.path.exists(current_cache + '/system'):
 						if current_data['update'] == '1':
 							last_file = open(current_cache + '/system/last', 'w')
@@ -92,6 +100,8 @@ def need_pending():
 							search_file = open(current_cache + '/system/search', 'w')
 			   				search_file.write(phpserialize.dumps('0'))
 							search_file.close()
+
+		print "[pending:main] Processed pending user " + user + "."
 
 
 ################

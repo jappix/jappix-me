@@ -58,6 +58,7 @@ def need_update():
 def get_vcard(session, user):
 	vcard = xmpp.Node('vCard', attrs={'xmlns': xmpp.NS_VCARD})
 	iq = xmpp.Protocol('iq', user, 'get', payload=[vcard])
+
 	return session.SendAndCallForResponse(iq, handle_vcard)
 
 # Handles the vCard
@@ -70,6 +71,8 @@ def handle_vcard(session, stanza):
 		change_file.write(xmpp.simplexml.ustr(stanza).encode('utf-8'))
 		change_file.close()
 
+	print "[update:vcard] Got vcard for " + user_from + "."
+
 
 #################
 ### MICROBLOG ###
@@ -80,6 +83,7 @@ def get_microblog(session, user):
 	items = xmpp.Node('items', attrs={'node': 'urn:xmpp:microblog:0'})
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[items])
 	iq = xmpp.Protocol('iq', user, 'get', payload=[pubsub])
+
 	return session.SendAndCallForResponse(iq, handle_microblog)
 
 # Handles the microblog
@@ -92,6 +96,8 @@ def handle_microblog(session, stanza):
 		change_file.write(xmpp.simplexml.ustr(stanza).encode('utf-8'))
 		change_file.close()
 
+	print "[update:microblog] Got microblog for " + user_from + "."
+
 
 ##############
 ### GEOLOC ###
@@ -102,6 +108,7 @@ def get_geoloc(session, user):
 	items = xmpp.Node('items', attrs={'node': 'http://jabber.org/protocol/geoloc', 'max_items': '1'})
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[items])
 	iq = xmpp.Protocol('iq', user, 'get', payload=[pubsub])
+
 	return session.SendAndCallForResponse(iq, handle_geoloc)
 
 # Handles the geoloc
@@ -114,6 +121,8 @@ def handle_geoloc(session, stanza):
 		change_file.write(xmpp.simplexml.ustr(stanza).encode('utf-8'))
 		change_file.close()
 
+	print "[update:geoloc] Got geoloc for " + user_from + "."
+
 
 ################
 ### LAUNCHER ###
@@ -124,6 +133,7 @@ def login():
     con = xmpp.Client(config.get('bot', 'domain'), debug=[])
     con.connect(server=(config.get('bot', 'domain'), 5222), secure=False)
     con.auth(config.get('bot', 'username'), config.get('bot', 'password'), 'Jappix Me (UB' + str(int(time.time())) + ')')
+
     return con
 
 # Initializes
@@ -131,16 +141,33 @@ if __name__ == '__main__':
 	users_need = need_update()
 	
 	if len(users_need) > 0:
+		if len(users_need) == 1:
+			print "[update:main] There is 1 user to be updated."
+		else:
+			print "[update:main] There are " + len(users_need) + " users to be updated."
+
 		con = login()
 		
+		print "[update:main] Connected to bot."
+
 		for user in users_need:
+			print "[update:main] Updating " + user + "..."
+
 			get_vcard(con, user)
 			get_microblog(con, user)
 			get_geoloc(con, user)
 			con.Process(1)
+
+			print "[update:main] Updated " + user + "..."
 		
 		# Then, let it run 1 minute max
 		for i in range(60):
 			con.Process(1)
 		
+		print "[update:main] Update finished, 1 minute wait done."
+
 		con.disconnect()
+
+		print "[update:main] Disconnected from bot."
+	else:
+		print "[update:main] Profiles are up to date. Yay!"
