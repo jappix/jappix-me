@@ -1,3 +1,5 @@
+ #!/usr/bin/env python -W ignore::DeprecationWarning
+
 '''
 
 Jappix Me - Your public profile, anywhere
