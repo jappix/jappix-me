@@ -166,11 +166,11 @@ if __name__ == '__main__':
 			get_geoloc(con, user)
 			con.Process(1)
 		
-		# Then, let it run 1 minute max
-		for i in range(60):
+		# Then, let it run 5 minutes max
+		for i in range(300):
 			con.Process(1)
 		
-		print "[update:main] Update finished, 1 minute wait done."
+		print "[update:main] Update finished, 5 minutes wait done."
 
 		con.disconnect()
 
