@@ -40,9 +40,9 @@ def need_update():
 			
 			if current_content and current_content.isdigit():
 				current_content = int(current_content)
-			else
+			else:
 				current_content = 0
-			
+
    			if (current_time - current_content) > 86400:
    				vcard_file = profile_path + '/profile/vcard'
    				
