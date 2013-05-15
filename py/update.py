@@ -35,8 +35,13 @@ def need_update():
 		
 		if os.path.exists(current_path):
 			current_file = open(current_path, 'r')
-			current_content = int(current_file.read().strip())
+			current_content = current_file.read().strip()
 			current_file.close()
+			
+			if current_content and current_content.isdigit():
+				current_content = int(current_content)
+			else
+				current_content = 0
 			
    			if (current_time - current_content) > 86400:
    				vcard_file = profile_path + '/profile/vcard'
