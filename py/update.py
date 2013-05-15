@@ -157,7 +157,7 @@ if __name__ == '__main__':
 		if len(users_need) == 1:
 			print "[update:main] There is 1 user to be updated."
 		else:
-			print "[update:main] There are " + len(users_need) + " users to be updated."
+			print "[update:main] There are " + str(len(users_need)) + " users to be updated."
 
 		con = login()
 		
