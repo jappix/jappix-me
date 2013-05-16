@@ -720,6 +720,7 @@ function xmlToArray($xml) {
 // Generates the channel HTML code
 function genChannel($user, $user_microblog, $start, $stop, $disp_id = null) {
 	$k = 0;
+	$post_id = $comments_href = '';
 	
 	// Only keep the requested entry?
 	if($disp_id && isset($user_microblog[$disp_id])) {
