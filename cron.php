@@ -69,7 +69,7 @@ foreach($available_users as $current_user) {
 					$current_avatar_type = 'png';
 
 				// Avatar exists?
-				if($current_avatar_binval && preg_match('/^(png|jpg|gif)$/', $current_avatar_type))
+				if($current_avatar_binval && $current_avatar_type)
 					$exists_avatar = true;
 			}
 		}
