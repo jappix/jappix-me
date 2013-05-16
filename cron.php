@@ -64,8 +64,8 @@ foreach($available_users as $current_user) {
 				// User has an avatar
 				if(isset($current_vcard_photo['type']) && isset($current_vcard_photo['binval'])) {
 					// Get avatar data
-					$current_avatar_binval = $current_vcard_photo['binval'];
-					$current_avatar_type = $current_vcard_photo['type'];
+					$current_avatar_binval = isset($current_vcard_photo['binval']) ? $current_vcard_photo['binval'][0]['sub'] : null;
+					$current_avatar_type = isset($current_vcard_photo['type']) ? $current_vcard_photo['type'][0]['sub'] : null;
 
 					if(!$current_avatar_type)
 						$current_avatar_type = 'png';
