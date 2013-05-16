@@ -53,17 +53,16 @@ foreach($available_users as $current_user) {
 
 		// Any avatar for this user?
 		$exists_avatar = false;
+		$current_user_vcard = $current_data['vcard'];
 
-		if(isset($current_data['vcard'])) {
-			$current_vcard_arr = $current_data['vcard'];
-			print('1'."\n");
-			print_r($current_vcard_arr);
+		if(isset($current_user_vcard['vcard'])) {
+			$current_vcard_arr = $current_user_vcard['vcard'][0]['sub'];
+			
 			if(isset($current_vcard_arr['photo'])) {
 				$current_vcard_photo = $vcard_arr['photo'][0]['sub'];
-				print('2'."\n");
+				
 				// User has an avatar
 				if(isset($current_vcard_photo['type']) && isset($current_vcard_photo['binval'])) {
-					print('3'."\n");
 					// Get avatar data
 					$current_avatar_binval = $current_vcard_photo['binval'];
 					$current_avatar_type = $current_vcard_photo['type'];
