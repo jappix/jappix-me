@@ -308,6 +308,18 @@ function readXMPPData($user) {
 
 /* UTILITIES */
 
+// Returns from where CRON task is invoked
+function sourceClient() {
+	try {
+		if((php_sapi_name() == 'cli') || empty($_SERVER['REMOTE_ADDR']))
+			return 'cli';
+		
+		return 'cgi';
+	} catch(Exception $e) {
+		return 'cgi';
+	}
+}
+
 // Validates a mail or XMPP address
 function isAddress($address) {
 	return preg_match('/^([^@]+)@([^@]+)$/', $address);
