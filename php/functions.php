@@ -761,8 +761,8 @@ function genChannel($user, $user_microblog, $start, $stop, $disp_id = null) {
 					$stamp = trim($entry['published'][0]['sub']);
 				if(isset($entry['link']))
 					$attached = trim($entry['link'][0]['sub']);
-				if(isset($entry['source'])) {
-					$source = $entry['source'][0]['sub'];
+				if(isset($entry['source']) || isset($entry['author'])) {
+					$source = isset($entry['source']) ? $entry['source'][0]['sub'] : $entry;
 					
 					if(isset($source['author'])) {
 						$author = $source['author'][0]['sub'];
