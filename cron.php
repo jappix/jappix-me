@@ -65,8 +65,6 @@ foreach($available_users as $current_user) {
 				}
 			}
 		}
-	} else {
-		print('[cron] Storage okay for '.$current_user.'.'."\n");
 	}
 }
 
