@@ -64,7 +64,7 @@ foreach($available_users as $current_user) {
 				// Get avatar data
 				$current_avatar_binval = isset($current_vcard_photo['binval']) ? $current_vcard_photo['binval'][0]['sub'] : null;
 				$current_avatar_type = isset($current_vcard_photo['type']) ? substr(strrchr($current_vcard_photo['type'][0]['sub'], '/'), 1) : null;
-
+				print($current_avatar_type."\n");
 				if(!$current_avatar_type)
 					$current_avatar_type = 'png';
 
@@ -74,8 +74,10 @@ foreach($available_users as $current_user) {
 			}
 		}
 
-		if($exists_avatar)
+		if($exists_avatar) {
+			print('PLOP'."\n");
 			writeCache($current_user, 'avatar', 'exists', '');
+		}
 		else
 			writeCache($current_user, 'avatar', 'not_exists', '');
 	}
