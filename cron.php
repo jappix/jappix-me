@@ -50,8 +50,10 @@ foreach($available_users as $current_user) {
 
 		// Regenerate user XMPP data
 		$current_data = requestXMPPData($current_user);
-		print_r($current_data);
+
 		// Any avatar for this user?
+		$exists_avatar = false;
+
 		if(isset($current_data['vcard'])) {
 			$current_vcard_arr = $current_data['vcard'][0]['sub'];
 			
@@ -62,12 +64,15 @@ foreach($available_users as $current_user) {
 				if(isset($current_vcard_photo['type']) && isset($current_vcard_photo['binval']) && $current_vcard_photo['type'] && $current_vcard_photo['binval']) {
 					// Avatar exists?
 					if($current_vcard_photo['binval'] && preg_match('/^(png|jpg|gif)$/', $current_vcard_photo['type']))
-						writeCache($current_user, 'avatar', 'exists', '');
-					else
-						writeCache($current_user, 'avatar', 'not_exists', '');
+						$exists_avatar = true;
 				}
 			}
 		}
+
+		if($exists_avatar)
+			writeCache($current_user, 'avatar', 'exists', '');
+		else
+			writeCache($current_user, 'avatar', 'not_exists', '');
 	}
 }
 
