@@ -45,10 +45,6 @@ else if(preg_match('/(\/+)$/', $url))
 if($url != strtolower($url))
 	$url = strtolower($url);
 
-// Temporary 'vanaryon' to 'valerian' redirect
-if(preg_match('/^\/vanaryon@(.+)/', $url))
-	$url = preg_replace('/^\/vanaryon@(.+)/', '/valerian@$1', $url);
-
 // Don't redirect if this is a folder
 if(file_exists('.'.$url))
 	$url = $init_url;
