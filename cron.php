@@ -14,7 +14,10 @@ include('./php/config.php');
 include('./php/functions.php');
 
 // Disable PHP error reporting
-
+if(getConfig('app', 'mode') != 'development') {
+	ini_set('display_errors', 'off');
+	ini_set('error_reporting', 0);
+}
 
 // Don't allow non-CLI requests
 if(sourceClient() != 'cli')
