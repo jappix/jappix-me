@@ -58,6 +58,8 @@ foreach($available_users as $current_user) {
 		if(isset($current_user_vcard['vcard'])) {
 			$current_vcard_arr = $current_user_vcard['vcard'][0]['sub'];
 			
+			print_r($current_vcard_arr);
+
 			if(isset($current_vcard_arr['photo'])) {
 				$current_vcard_photo = $vcard_arr['photo'][0]['sub'];
 				
