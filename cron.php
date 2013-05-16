@@ -57,7 +57,7 @@ foreach($available_users as $current_user) {
 		if(isset($current_data['vcard'])) {
 			$current_vcard_arr = $current_data['vcard'][0]['sub'];
 			print('1'."\n");
-			print_r($current_data['vcard']);
+			print_r($current_vcard_arr);
 			if(isset($current_vcard_arr['photo'])) {
 				$current_vcard_photo = $vcard_arr['photo'][0]['sub'];
 				print('2'."\n");
