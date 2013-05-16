@@ -9,6 +9,9 @@
  */
 
 
+// Change current working dir
+chdir(dirname(__FILE__));
+
 // Initialize
 include('./php/config.php');
 include('./php/functions.php');
