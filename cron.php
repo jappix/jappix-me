@@ -29,6 +29,7 @@ print('[cron] Scanning users...'."\n");
 print("\n");
 
 // Regenerate updated user data
+$count_update = 0;
 $available_users = scandir('./cache');
 
 foreach($available_users as $current_user) {
@@ -44,6 +45,8 @@ foreach($available_users as $current_user) {
 	// Check a raw file is available
 	if($exists_vcard && $exists_microblog && $exists_geoloc) {
 		print('[cron] Regenerating storage for '.$current_user.'...'."\n");
+
+		$count_update++;
 
 		// Regenerate user XMPP data
 		$current_data = requestXMPPData($current_user);
@@ -67,6 +70,10 @@ foreach($available_users as $current_user) {
 		}
 	}
 }
+
+// Nobody updated?
+if($count_update == 0)
+	print('[cron] Nothing to do.'."\n");
 
 // All done!
 print("\n");
