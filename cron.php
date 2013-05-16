@@ -50,7 +50,7 @@ foreach($available_users as $current_user) {
 
 		// Regenerate user XMPP data
 		$current_data = requestXMPPData($current_user);
-
+		print_r($current_data);
 		// Any avatar for this user?
 		if(isset($current_data['vcard'])) {
 			$current_vcard_arr = $current_data['vcard'][0]['sub'];
