@@ -60,20 +60,24 @@ foreach($available_users as $current_user) {
 			
 			if(isset($current_vcard_arr['photo'])) {
 				$current_vcard_photo = $current_vcard_arr['photo'][0]['sub'];
-				
-				// User has an avatar
-				if(isset($current_vcard_photo['type']) && isset($current_vcard_photo['binval'])) {
-					// Get avatar data
-					$current_avatar_binval = isset($current_vcard_photo['binval']) ? $current_vcard_photo['binval'][0]['sub'] : null;
-					$current_avatar_type = isset($current_vcard_photo['type']) ? $current_vcard_photo['type'][0]['sub'] : null;
 
-					if(!$current_avatar_type)
-						$current_avatar_type = 'png';
+				print('1'."\n");
 
-					// Avatar exists?
-					if($current_avatar_binval && preg_match('/^(png|jpg|gif)$/', $current_avatar_type))
+				// Get avatar data
+				$current_avatar_binval = isset($current_vcard_photo['binval']) ? $current_vcard_photo['binval'][0]['sub'] : null;
+				$current_avatar_type = isset($current_vcard_photo['type']) ? $current_vcard_photo['type'][0]['sub'] : null;
+
+				print('2'."\n");
+
+				if(!$current_avatar_type)
+					$current_avatar_type = 'png';
+
+				print('3: '.$current_avatar_binval."\n");
+				print('4: '.$current_avatar_type."\n");
+
+				// Avatar exists?
+				if($current_avatar_binval && preg_match('/^(png|jpg|gif)$/', $current_avatar_type))
 						$exists_avatar = true;
-				}
 			}
 		}
 
