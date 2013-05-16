@@ -24,8 +24,9 @@ if(sourceClient() != 'cli')
 	exit('Command-Line CRON Service. Please call me from your shell.');
 
 // Greet the shell user
-print('[cron] Welcome, master!');
-print('[cron] Scanning users...');
+print('[cron] Welcome, master!'."\n");
+print('[cron] Scanning users...'."\n");
+print("\n");
 
 // Regenerate updated user data
 $available_users = scandir('./cache');
@@ -42,7 +43,7 @@ foreach($available_users as $current_user) {
 
 	// Check a raw file is available
 	if($exists_vcard && $exists_microblog && $exists_geoloc) {
-		print('[cron] Regenerating storage for '.$current_user.'...');
+		print('[cron] Regenerating storage for '.$current_user.'...'."\n");
 
 		// Regenerate user XMPP data
 		$current_data = requestXMPPData($current_user);
@@ -65,12 +66,13 @@ foreach($available_users as $current_user) {
 			}
 		}
 	} else {
-		print('[cron] Storage okay for '.$current_user.'.');
+		print('[cron] Storage okay for '.$current_user.'.'."\n");
 	}
 }
 
 // All done!
-print('[cron] Done.');
-print('[cron] Bye Bye!');
+print("\n");
+print('[cron] Done.'."\n");
+print('[cron] Bye Bye!'."\n");
 
 exit;
