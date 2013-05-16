@@ -55,7 +55,7 @@ foreach($available_users as $current_user) {
 		$exists_avatar = false;
 
 		if(isset($current_data['vcard'])) {
-			$current_vcard_arr = $current_data['vcard'][0]['sub'];
+			$current_vcard_arr = $current_data['vcard'];
 			print('1'."\n");
 			print_r($current_vcard_arr);
 			if(isset($current_vcard_arr['photo'])) {
