@@ -64,9 +64,14 @@ foreach($available_users as $current_user) {
 				// Get avatar data
 				$current_avatar_binval = isset($current_vcard_photo['binval']) ? $current_vcard_photo['binval'][0]['sub'] : null;
 				$current_avatar_type = isset($current_vcard_photo['type']) ? substr(strrchr($current_vcard_photo['type'][0]['sub'], '/'), 1) : null;
-				print($current_avatar_type."\n");
+
+				// Default avatar type
 				if(!$current_avatar_type)
 					$current_avatar_type = 'png';
+
+				// JPEG files must have .jpg extension
+				if($current_avatar_type == 'jpeg')
+					$current_avatar_type = 'jpg';
 
 				// Avatar exists?
 				if($current_avatar_binval && preg_match('/^(png|jpg|gif)$/', $current_avatar_type))
@@ -74,10 +79,8 @@ foreach($available_users as $current_user) {
 			}
 		}
 
-		if($exists_avatar) {
-			print('PLOP'."\n");
+		if($exists_avatar)
 			writeCache($current_user, 'avatar', 'exists', '');
-		}
 		else
 			writeCache($current_user, 'avatar', 'not_exists', '');
 	}
