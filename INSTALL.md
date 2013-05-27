@@ -30,7 +30,7 @@ For those using lighttpd, here is the configuration you should add:
 	$HTTP["host"] == "me.jappix.com" {
 	        server.document-root = "/var/www/me.jappix.com"
 
-	        url.access-deny = ( "config.xml" )
+	        url.access-deny = ( "config.xml", "cron.php" )
 	        url.rewrite-once = ( "^/([^\/]+@[^\/]+|new|privacy|cache|invite|pending|py)(([\/]+)(.*))?$" => "/index.php?u=$1&s=$4", "^/bosh(.*)?" => "/http-bind$1" )
 	        proxy.server = ( "bosh" => (( "host" => "127.0.0.1", "port" => 5280 )))
 
@@ -75,9 +75,10 @@ Don't forget to replace the absolute path to your Jappix Me base dir so that the
 5. Secure Jappix Me
 -------------------
 
-In order to secure Jappix Me, please check that the following folders cannot be accessed from the Web:
+In order to secure Jappix Me, please check that the following files and folders cannot be accessed from the Web:
 
 * ./config.xml
+* ./cron.php
 * ./py (check by trying to access ./py/update.py)
 * ./php
 * ./cache

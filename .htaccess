@@ -11,7 +11,7 @@ RewriteBase /
 RewriteRule ^([^\/]+@[^\/]+|new|privacy|cache|invite|pending|py)(([\/]+)(.*))?$ index.php?u=$1&s=$4 [L]
 
 # Requires mod_access
-<Files config.xml>
+<Files ~ "^(config\.xml|cron\.php)$">
 	Order allow,deny
 	Deny from all
 </Files>
