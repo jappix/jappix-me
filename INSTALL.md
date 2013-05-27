@@ -5,7 +5,7 @@ Jappix Me Installation
 ----------------
 
 * Apache or lighttpd
-* PHP 5+ (CGI + CLI)
+* PHP 5+
 * Python 2.7+
 * A Linux OS
 
@@ -67,7 +67,6 @@ Then, paste these lines:
 	# Jappix Me bot
 	*/1 * * * * python /var/www/me.jappix.com/py/pending.py >>/dev/null
 	*/5 * * * * python /var/www/me.jappix.com/py/update.py >>/dev/null
-	*/5 * * * * php /var/www/me.jappix.com/cron.php >>/dev/null
 
 Don't forget to replace the absolute path to your Jappix Me base dir so that the scripts can be launched.
 
