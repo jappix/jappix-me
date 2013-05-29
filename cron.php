@@ -81,14 +81,32 @@ foreach($available_users as $current_user) {
 				// Avatar exists?
 				if($current_avatar_binval && preg_match('/^(png|jpg|gif)$/', $current_avatar_type))
 					$exists_avatar = true;
+
+				// Free some memory
+				unset($current_vcard_photo);
+				unset($current_avatar_binval);
+				unset($current_avatar_type);
 			}
+
+			// Free some memory
+			unset($current_vcard_arr);
 		}
 
 		if($exists_avatar)
 			writeCache($current_user, 'avatar', 'exists', '');
 		else
 			writeCache($current_user, 'avatar', 'not_exists', '');
+
+		// Free some memory
+		unset($current_data);
+		unset($exists_avatar);
+		unset($current_user_vcard);
 	}
+
+	// Free some memory
+	unset($exists_vcard);
+	unset($exists_microblog);
+	unset($exists_geoloc);
 }
 
 // Nobody updated?
