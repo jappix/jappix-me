@@ -64,7 +64,6 @@ function initComments() {
 	
 	// Must connect!
 	if(((getTimeStamp() - stamp) >= JSJACHBC_MAX_WAIT) || !con.resume()) {
-		oArgs = new Object();
 		oArgs.domain = $('#config input[name="xmpp-domain"]').val();
 		oArgs.authtype = 'saslanon';
 		oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';

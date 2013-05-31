@@ -195,16 +195,14 @@ $(document).ready(function() {
 			return false;
 		}
 		
+		// Read config
+		var config_bot_domain = $('#config input[name="bot-domain"]').val();
+		var config_xmpp_domain = $('#config input[name="xmpp-domain"]').val();
+		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
+
 		// Connect!
 		oArgs = new Object();
-		oArgs.httpbase = $('#config input[name="xmpp-bosh"]').val();
-				
-		con = new JSJaCHttpBindingConnection(oArgs);
-		
-		con.registerHandler('onconnect', handleConnected);
-		con.registerHandler('onerror', handleError);
-		con.registerHandler('ondisconnect', handleDisconnected);
-		
+		oArgs.httpbase = config_xmpp_bosh;
 		oArgs = new Object();
 		oArgs.username = username;
 		oArgs.domain = domain;
@@ -212,12 +210,23 @@ $(document).ready(function() {
 		oArgs.pass = password;
 		oArgs.secure = true;
 		oArgs.xmllang = 'en';
-		
-		con.connect(oArgs);
-		
-		// Connecting status
-		$(this).find('input').attr('disabled', true);
-		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+
+		// Domain not in serviced ones?
+		if((domain != config_bot_domain) && (domain != config_xmpp_domain)) {
+			con = new JSJaCHttpBindingConnection(oArgs);
+			
+			con.registerHandler('onconnect', handleConnected);
+			con.registerHandler('onerror', handleError);
+			con.registerHandler('ondisconnect', handleDisconnected);
+			
+			con.connect(oArgs);
+			
+			// Connecting status
+			$(this).find('input').attr('disabled', true);
+			$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+		} else {
+			handleConnected();
+		}
 		
 		return false;
 	});

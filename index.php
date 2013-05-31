@@ -443,6 +443,7 @@ if($page == '404') {
 	
 	<!-- BEGIN CONFIG -->
 	<div id="config">
+		<input type="hidden" name="bot-domain" value="<?php echo getConfig('bot', 'domain'); ?>" />
 		<input type="hidden" name="xmpp-domain" value="<?php echo getConfig('xmpp', 'domain'); ?>" />
 		<input type="hidden" name="xmpp-bosh" value="<?php echo getConfig('xmpp', 'bosh'); ?>" />
 		<input type="hidden" name="app-url" value="<?php echo $path_root_protocol.'://'.$path_root_domain.'/'; ?>" />
