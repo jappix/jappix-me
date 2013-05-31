@@ -283,17 +283,16 @@ $(document).ready(function() {
 		username = username.toLowerCase();
 		domain = domain.toLowerCase();
 		
-		// Not allowed?
-		if((domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
+		// Read config
+		var config_xmpp_domain = $('#config input[name="xmpp-domain"]').val();
+		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
+
+		// Not allowed using given server?
+		if((domain != config_xmpp_domain) || (domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible.').show();
 			
 			return false;
 		}
-
-		// Read config
-		var config_bot_domain = $('#config input[name="bot-domain"]').val();
-		var config_xmpp_domain = $('#config input[name="xmpp-domain"]').val();
-		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
 		
 		// Account args
 		oArgs = new Object();
@@ -305,23 +304,18 @@ $(document).ready(function() {
 		oArgs.secure = true;
 		oArgs.xmllang = 'en';
 
-		// Domain not in serviced ones?
-		if((domain != config_bot_domain) && (domain != config_xmpp_domain)) {
-			// Connect!
-			con = new JSJaCHttpBindingConnection(oArgs);
-			
-			con.registerHandler('onconnect', handleConnected);
-			con.registerHandler('onerror', handleError);
-			con.registerHandler('ondisconnect', handleDisconnected);
-			
-			con.connect(oArgs);
-			
-			// Connecting status
-			$(this).find('input').attr('disabled', true);
-			$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
-		} else {
-			handleConnected();
-		}
+		// Connect!
+		con = new JSJaCHttpBindingConnection(oArgs);
+		
+		con.registerHandler('onconnect', handleConnected);
+		con.registerHandler('onerror', handleError);
+		con.registerHandler('ondisconnect', handleDisconnected);
+		
+		con.connect(oArgs);
+		
+		// Connecting status
+		$(this).find('input').attr('disabled', true);
+		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
 
 		return false;
 	});
