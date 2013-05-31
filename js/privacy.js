@@ -195,7 +195,7 @@ $(document).ready(function() {
 
 		// Not allowed?
 		if((domain != config_bot_domain) || (domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
-			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible.').show();
+			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible. Must be ' + config_bot_domain).show();
 			return false;
 		}
 
