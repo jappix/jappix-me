@@ -202,7 +202,6 @@ $(document).ready(function() {
 
 		// Connect!
 		oArgs = new Object();
-		alert(config_xmpp_bosh);
 		oArgs.httpbase = config_xmpp_bosh;
 		oArgs.username = username;
 		oArgs.domain = domain;
@@ -210,7 +209,7 @@ $(document).ready(function() {
 		oArgs.pass = password;
 		oArgs.secure = true;
 		oArgs.xmllang = 'en';
-		alert(oArgs.httpbase);
+
 		// Domain not in serviced ones?
 		con = new JSJaCHttpBindingConnection(oArgs);
 		
