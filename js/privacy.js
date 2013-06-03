@@ -15,7 +15,7 @@ var USER_PASSWORD = '';
 // XMPP connected handler
 function handleConnected() {
 	// Change status
-	if(con && con.connected()) {
+	if((typeof(con) != 'undefined') && con && con.connected()) {
 		// Stop waiter
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
 
