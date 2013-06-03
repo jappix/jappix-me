@@ -114,7 +114,7 @@
 		<div class="stepped">
 			<h1>Changes saved!</h1>
 			<p>Your changes were <b>successfully saved</b>!.</p>
-			<p>You can now go back to your profile. It should be updated in the <b>next minutes</b>.</p>
+			<p>You can now go back to your profile. It should be updated in the <b>next minutes</b> (we will notify you).</p>
 			<a class="button back">« Back to my profile</a>
 		</div>
 		

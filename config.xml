@@ -45,7 +45,7 @@
 		<!-- production/development -->
 		<mode>development</mode>
 
-		<!-- jappix me url -->
+		<!-- jappix me web url -->
 		<url>http://me.server.tld</url>
 
 		<!-- jappix static host (install jappix or use static.jappix.com) -->

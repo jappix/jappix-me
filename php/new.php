@@ -97,8 +97,8 @@
 		<div class="number">5</div>
 		<div class="stepped">
 			<h1>Thank you!</h1>
-			<p>Your profile will be <b>ready in minutes</b>. Thanks a lot for using Jappix Me. Really!</p>
-			<p>Then, start <b>posting social updates using <a href="https://jappix.com/" target="_blank">Jappix</a></b>. These updates will appear <b>some hours later</b> on your Jappix Me profile.</p>
+			<p>Your profile will be <b>ready in minutes</b> (we will notify you). Thanks a lot for using Jappix Me!</p>
+			<p>Then, start <b>posting social updates using <a href="https://jappix.com/" target="_blank">Jappix</a></b>. These updates will appear <b>a few hours later</b> on your Jappix Me profile.</p>
 			<p class="reveal">Here is the link to your profile: <a class="highlight" target="_blank"></a></p>
 			<p>When you are waiting, you should have a look to <b>other Jappix services</b>: <a href="https://project.jappix.com/" target="_blank">Jappix Project</a> (your own social cloud), <a href="https://mini.jappix.com/" target="_blank">Jappix Mini</a> (your own website mini-chat).</p>
 			<a class="button back" href="/">« Back to homepage</a>
