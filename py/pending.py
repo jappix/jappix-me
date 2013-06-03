@@ -226,11 +226,11 @@ def need_pending():
 
 							microblog_cache = current_cache + '/pubsub/microblog'
 							pictures_cache = current_cache + '/pubsub/pictures'
-							
-							os.path.exists(microblog_cache):
+
+							if os.path.exists(microblog_cache):
 								os.remove(microblog_cache)
-							
-							os.path.exists(pictures_cache):
+
+							if os.path.exists(pictures_cache):
 								os.remove(pictures_cache)
 
 						# Geoloc?
