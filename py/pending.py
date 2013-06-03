@@ -113,6 +113,8 @@ def need_pending():
 		# Check account credentials
 		login_result = login(current_data['usr'], current_data['srv'], current_data['pwd'])
 
+		print "[pending:main] Connecting to " + user + "..."
+
 		if login_result['success']:
 			if current_data['type'] == 'new':
 				print "[pending:new] Creating new user " + user + "..."
@@ -258,6 +260,11 @@ def need_pending():
 						}
 					})
 
+			# Close connection
+			(login_result['session']).disconnect()
+
+			print "[pending:main] Disconnected from " + user + "."
+
 		else:
 			# Notify the user
 			notifications.append({
@@ -275,10 +282,9 @@ def need_pending():
 				}
 			})
 
+			print "[pending:main] Could not connect to " + user + "."
+		
 		print "[pending:main] Processed pending user " + user + "."
-
-		# Close connection
-		(login_result['session']).disconnect()
 
 	# Send notification messages (if any)
 	if notifications:
