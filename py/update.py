@@ -75,7 +75,7 @@ def handle_vcard(session, stanza):
 	user_from = str(stanza.getFrom())
 	current_path = BASE_DIR + '/cache/' + user_from + '/raw'
 	
-	if os.path.exists(current_path) and (stanza.getType() == 'result') and stanza.getTag('vCard'):
+	if os.path.exists(current_path) and (stanza.getType() != 'error') and stanza.getTag('vCard'):
 		change_file = open(current_path + '/vcard', 'w')
 		change_file.write(xmpp.simplexml.ustr(stanza).encode('utf-8'))
 		change_file.close()
@@ -161,7 +161,7 @@ if __name__ == '__main__':
 			print "[update:main] There is 1 user to be updated."
 		else:
 			print "[update:main] There are " + str(len(users_need)) + " users to be updated."
-		
+
 		con = login()
 		
 		if con is False:
