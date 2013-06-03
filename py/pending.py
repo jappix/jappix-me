@@ -224,8 +224,14 @@ def need_pending():
 						else:
 							microblog_access(login_result['session'], user, 'presence')
 
-							os.remove(current_cache + '/pubsub/microblog')
-							os.remove(current_cache + '/pubsub/pictures')
+							microblog_cache = current_cache + '/pubsub/microblog'
+							pictures_cache = current_cache + '/pubsub/pictures'
+							
+							os.path.exists(microblog_cache):
+								os.remove(microblog_cache)
+							
+							os.path.exists(pictures_cache):
+								os.remove(pictures_cache)
 
 						# Geoloc?
 						if current_data['geoloc'] == 'public':
