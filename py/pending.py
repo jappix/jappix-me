@@ -117,8 +117,8 @@ def need_pending():
 				print "[pending:new] Creating new user " + user + "..."
 
 				# Make microblog & geoloc public
-				microblog_access('open')
-				geoloc_access('open')
+				microblog_access(login_result['session'], user, 'open')
+				geoloc_access(login_result['session'], user, 'open')
 
 				# Create storage tree
 				if not os.path.exists(current_cache):
