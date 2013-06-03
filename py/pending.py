@@ -31,7 +31,7 @@ def message_app_send(session, user, body, app_data):
 
 	iq = xmpp.Protocol('message', user, 'headline', payload=[body, app])
 
-	return session.SendAndCallForResponse(iq)
+	return session.send(iq)
 
 
 ##############
