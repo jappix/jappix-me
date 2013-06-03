@@ -118,7 +118,7 @@ def handle_microblog(session, stanza):
 def get_geoloc(session, user):
 	print "[update:geoloc] Getting geoloc for " + user + "..."
 
-	items = xmpp.Node('items', attrs={'node': 'http://jabber.org/protocol/geoloc', 'max_items': '1'})
+	items = xmpp.Node('items', attrs={'node': xmpp.NS_GEOLOC, 'max_items': '1'})
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[items])
 	iq = xmpp.Protocol('iq', user, 'get', payload=[pubsub])
 
@@ -144,10 +144,13 @@ def handle_geoloc(session, stanza):
 # Logins to XMPP
 def login():
     con = xmpp.Client(config.get('bot', 'domain'), debug=[])
-    con.connect(server=(config.get('bot', 'domain'), 5222), secure=False)
-    con.auth(config.get('bot', 'username'), config.get('bot', 'password'), 'Jappix Me (UB' + str(int(time.time())) + ')')
+    connector = con.connect(server=(config.get('bot', 'domain'), 5222), secure=False)
+    
+    if connector and con.auth(config.get('bot', 'username'), config.get('bot', 'password'), 'Jappix Me (UB' + str(int(time.time())) + ')'):
+    	return con
 
-    return con
+    return False
+
 
 # Initializes
 if __name__ == '__main__':
@@ -158,27 +161,30 @@ if __name__ == '__main__':
 			print "[update:main] There is 1 user to be updated."
 		else:
 			print "[update:main] There are " + str(len(users_need)) + " users to be updated."
-
+		
 		con = login()
 		
-		print "[update:main] Connected to bot."
+		if con is False:
+			print "[update:main] Could not connect to bot."
+		else:
+			print "[update:main] Connected to bot."
 
-		for user in users_need:
-			print "[update:main] Updating " + user + "..."
+			for user in users_need:
+				print "[update:main] Updating " + user + "..."
 
-			get_vcard(con, user)
-			get_microblog(con, user)
-			get_geoloc(con, user)
-			con.Process(1)
-		
-		# Then, let it run 2 minutes max
-		for i in range(120):
-			con.Process(1)
-		
-		print "[update:main] Update finished, 2 minutes wait done."
+				get_vcard(con, user)
+				get_microblog(con, user)
+				get_geoloc(con, user)
+				con.Process(1)
+			
+			# Then, let it run 2 minutes max
+			for i in range(120):
+				con.Process(1)
+			
+			print "[update:main] Update finished, 2 minutes wait done."
 
-		con.disconnect()
+			con.disconnect()
 
-		print "[update:main] Disconnected from bot. Bye Bye."
+			print "[update:main] Disconnected from bot. Bye Bye."
 	else:
 		print "[update:main] Profiles are up to date. Yay!"

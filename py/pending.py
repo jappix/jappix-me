@@ -16,12 +16,96 @@ BASE_DIR = config.path()
 
 
 ###############
+### MESSAGE ###
+###############
+
+def message_app_send(session, user, body, app_data):
+	'''
+	<message xmlns="jabber:client" to="valerian@jappix.com" id="31" type="chat" xml:lang="fr">
+		<body>Hey</body>
+
+		<app xmlns="jappix:app">
+			<name id="me">Jappix Me</name>
+			
+			<data xmlns="jappix:app:me">
+				<action type="profile" job="new" success="1" />
+				<url>https://me.jappix.com/jid@server.tld</url>
+			</data>
+		</app>
+	</message>
+	'''
+
+	url = xmpp.Node('url', payload=[app_data['url']])
+	action = xmpp.Node('action', attrs={'type': app_data['type'], 'job': app_data['job'], 'success': app_data['success']})
+	
+	data = xmpp.Node('data', attrs={'xmlns': 'jappix:app:' + app_data['id']}, payload=[action, url])
+	name = xmpp.Node('name', attrs={'id': app_data['id']}, payload=[app_data['name']])
+
+	app = xmpp.Node('app', attrs={'xmlns': 'jappix:app'}, payload=[name, data])
+	body = xmpp.Node('body', payload=[body])
+
+	iq = xmpp.Protocol('message', user, 'headline', payload=[body, app])
+
+	return session.SendAndCallForResponse(iq)
+
+
+##############
+### PUBSUB ###
+##############
+
+def pubsub_configure(session, user, node, model, handler):
+	value = xmpp.Node('value', payload=[model])
+	field = xmpp.Node('field', attrs={'var': 'pubsub#access_model'}, payload=[value])
+	x = xmpp.Node('x', attrs={'xmlns': 'jabber:x:data', 'type': 'submit'}, payload=[field])
+	configure = xmpp.Node('configure', attrs={'node': node}, payload=[x])
+	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB}, payload=[configure])
+	iq = xmpp.Protocol('iq', user, 'set', payload=[pubsub])
+
+	return session.SendAndCallForResponse(iq, handler)
+
+
+#################
+### CONFIGURE ###
+#################
+
+def microblog_access(session, user, model):
+	print "[pending:configure] Configuring microblog for " + user + " as " + model + "..."
+
+	pubsub_configure(session, user, 'urn:xmpp:microblog:0', model, microblog_access_handle);
+
+def microblog_access_handle(session, stanza):
+	user_from = str(stanza.getFrom())
+	
+	if stanza.getType() == 'result':
+		print "[pending:configure] Configured microblog for " + user_from + "."
+	else:
+		print "[pending:configure] Could not configure microblog for '" + user_from + "'."
+
+def geoloc_access(session, user, model):
+	print "[pending:configure] Configuring geoloc for " + user + " as '" + model + "'..."
+
+	pubsub_configure(session, user, xmpp.NS_GEOLOC, model, geoloc_access_handle);
+
+def geoloc_access_handle(session, stanza):
+	user_from = str(stanza.getFrom())
+	
+	if stanza.getType() == 'result':
+		print "[pending:configure] Configured geoloc for " + user_from + "."
+	else:
+		print "[pending:configure] Could not configure geoloc for " + user_from + "."
+
+
+###############
 ### PENDING ###
 ###############
 
 # Apply the settings to the pending accounts
 def need_pending():
+	app_id = 'me'
+	app_name = 'Jappix Me'
+
 	need = []
+	notifications = []
 	sub_dirs = os.listdir(BASE_DIR + '/pending')
 	
 	for user in sub_dirs:
@@ -40,10 +124,18 @@ def need_pending():
 		
 		os.remove(current_pending)
 		
-		if login(current_data['usr'], current_data['srv'], current_data['pwd']):
+		# Check account credentials
+		login_result = login(current_data['usr'], current_data['srv'], current_data['pwd'])
+
+		if login_result['success']:
 			if current_data['type'] == 'new':
 				print "[pending:new] Creating new user " + user + "..."
 
+				# Make microblog & geoloc public
+				microblog_access('open')
+				geoloc_access('open')
+
+				# Create storage tree
 				if not os.path.exists(current_cache):
 					os.mkdir(current_cache)
 					os.mkdir(current_cache + '/raw')
@@ -53,6 +145,7 @@ def need_pending():
 					os.chmod(current_cache + '/raw', 0750)
 					os.chmod(current_cache + '/system', 0750)
 				
+				# Update profile data
 				if os.path.exists(current_cache + '/system'):
 					last_file = open(current_cache + '/system/last', 'w')
 		   			last_file.write('0')
@@ -65,6 +158,22 @@ def need_pending():
 					search_file = open(current_cache + '/system/search', 'w')
 		   			search_file.write(phpserialize.dumps('1'))
 					search_file.close()
+
+				# Notify the user
+				notifications.append({
+					'user': user,
+					'body': 'Your Jappix Me profile has been created. Check it out on ' + config.get('app', 'url') + '/' + user,
+					
+					'data': {
+						'id': app_id,
+						'name': app_name,
+
+						'url': config.get('app', 'url') + '/' + user,
+						'type': 'profile',
+						'job': 'new',
+						'success': '1'
+					}
+				})
 			
 			elif current_data['type'] == 'privacy':
 				if current_data['remove'] == '1':
@@ -72,17 +181,33 @@ def need_pending():
 
 					if os.path.exists(current_cache):
 						shutil.rmtree(current_cache)
+
+					# Notify the user
+					notifications.append({
+						'user': user,
+						'body': 'Your Jappix Me profile has been removed. We will miss you :(',
+						
+						'data': {
+							'id': app_id,
+							'name': app_name,
+
+							'url': config.get('app', 'url') + '/',
+							'type': 'profile',
+							'job': 'remove',
+							'success': '1'
+						}
+					})
 				
 				else:
 					print "[pending:privacy] Updating privacy settings for user " + user + "..."
 
+					# Update profile data
 					if os.path.exists(current_cache + '/system'):
 						if current_data['update'] == '1':
 							last_file = open(current_cache + '/system/last', 'w')
 				   			last_file.write('0')
 							last_file.close()
-					
-					if os.path.exists(current_cache + '/system'):
+
 						if current_data['flagged'] == '1':
 							flagged_file = open(current_cache + '/system/flagged', 'w')
 			   				flagged_file.write(phpserialize.dumps('1'))
@@ -103,7 +228,57 @@ def need_pending():
 			   				search_file.write(phpserialize.dumps('0'))
 							search_file.close()
 
+					# Notify the user
+					notifications.append({
+						'user': user,
+						'body': 'Your Jappix Me profile has been updated. View it on ' + config.get('app', 'url') + '/' + user,
+						
+						'data': {
+							'id': app_id,
+							'name': app_name,
+
+							'url': config.get('app', 'url') + '/',
+							'type': 'profile',
+							'job': 'update',
+							'success': '1'
+						}
+					})
+
+		else:
+			# Notify the user
+			notifications.append({
+				'user': user,
+				'body': 'Jappix Me could not connect to your account to create or update your profile, check your credentials. You can retry on ' + config.get('app', 'url') + '/',
+				
+				'data': {
+					'id': app_id,
+					'name': app_name,
+
+					'url': config.get('app', 'url') + '/' + user,
+					'type': 'profile',
+					'job': 'check',
+					'success': '0'
+				}
+			})
+
 		print "[pending:main] Processed pending user " + user + "."
+
+		# Close connection
+		(login_result['session']).disconnect()
+
+	# Send notification messages (if any)
+	if notifications:
+		login_bot = login(config.get('bot', 'username'), config.get('bot', 'domain'), config.get('bot', 'password'))
+
+		if login_bot['success']:
+			for current_notification in notifications:
+				message_app_send(login_bot['session'], login_bot['user'], login_bot['body'], login_bot['data'])
+
+			print "[pending:main] Sent " + str(len(notifications)) + " notification messages."
+		else:
+			print "[pending:main] Could not connect to bot."
+	else:
+		print "[pending:main] No notification message to send."
 
 
 ################
@@ -112,13 +287,19 @@ def need_pending():
 
 # Checks an XMPP account
 def login(user, domain, pwd):
+	return_values = {
+		'success': False
+	}
+
 	con = xmpp.Client(domain, debug=[])
 	connector = con.connect(server=(domain, 5222))
 	
-	if not connector or not con.auth(user, pwd, 'Jappix Me (PB' + str(int(time.time())) + ')'):
-		return False
+	if connector and con.auth(user, pwd, 'Jappix Me (PB' + str(int(time.time())) + ')'):
+		return_values['success'] = True
+		return_values['session'] = con
 	
-	return True
+	return return_values
+
 
 # Initializes
 if __name__ == '__main__':
