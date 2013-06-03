@@ -323,7 +323,7 @@ def login(user, domain, pwd):
 		'success': False
 	}
 
-	con = xmpp.Client(domain)
+	con = xmpp.Client(domain, debug=[])
 	connector = con.connect(server=(domain, 5222))
 	
 	if connector and con.auth(user, pwd, 'Jappix Me (PB' + str(int(time.time())) + ')'):
