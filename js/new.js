@@ -18,9 +18,6 @@ function handleConnected() {
 	if((typeof(con) != 'undefined') && con && con.connected()) {
 		// Stop waiter
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
-
-		// Disconnect from XMPP (not needed then)
-		con.disconnect();
 	}
 	
 	// Switch to next step!
@@ -55,10 +52,14 @@ function submitBot() {
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Done.');
 		
 		// Next step
+		var next_step = (((typeof(con) != 'undefined') && con && con.connected())) ? 3 : 4;
+
 		$('#content .step').eq(2).addClass('disabled');
 		$('#content .step').eq(2).find('button').attr('disabled', true);
-		$('#content .step').eq(3).removeClass('disabled');
-		$('#content .step').eq(3).find('button').removeAttr('disabled')
+		$('#content .step').eq(next_step).removeClass('disabled');
+
+		if(next_step == 3)
+			$('#content .step').eq(next_step).find('button').removeAttr('disabled')
 		
 		// Redirect
 		window.location.hash = 'step4';
@@ -200,6 +201,9 @@ function inviteFriends(mode, users) {
 		
 		// Send messages
 		sendInviteFriends(to_invite);
+
+		// Disconnect from XMPP (not needed then)
+		con.disconnect();
 	});
 }
 
