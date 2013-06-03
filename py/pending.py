@@ -77,7 +77,7 @@ def geoloc_access_handle(session, stanza):
 	if stanza.getType() == 'result':
 		print "[pending:configure] Configured geoloc for " + user_from + "."
 	else:
-		print "[pending:configure] Could not configure geoloc for " + user_from + "."
+		print "[pending:configure] Could not configure geoloc for '" + user_from + "'."
 
 
 ###############
@@ -279,7 +279,7 @@ def need_pending():
 
 		if login_bot['success']:
 			for current_notification in notifications:
-				message_app_send(login_bot['session'], login_bot['user'], login_bot['body'], login_bot['data'])
+				message_app_send(login_bot['session'], current_notification['user'], current_notification['body'], current_notification['data'])
 
 			print "[pending:main] Sent " + str(len(notifications)) + " notification messages."
 		else:
