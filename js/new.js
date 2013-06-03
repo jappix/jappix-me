@@ -13,9 +13,6 @@ function handleConnected() {
 	if(con && con.connected()) {
 		// Stop waiter
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
-
-		// Disconnect from XMPP (not needed then)
-		con.disconnect();
 	}
 	
 	// Switch to next step!
@@ -58,6 +55,9 @@ function submitBot() {
 		// Redirect
 		window.location.hash = 'step4';
 	});
+
+	// Disconnect from XMPP (not needed then)
+	con.disconnect();
 }
 
 // Checks if a value exists in an array
