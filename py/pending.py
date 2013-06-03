@@ -27,9 +27,10 @@ def message_app_send(session, user, body, app_data):
 	name = xmpp.Node('name', attrs={'id': app_data['id']}, payload=[app_data['name']])
 
 	app = xmpp.Node('app', attrs={'xmlns': 'jappix:app'}, payload=[name, data])
+	x = xmpp.Node('x', attrs={'xmlns': 'jabber:x:oob'}, payload=[url])
 	body = xmpp.Node('body', payload=[body])
 
-	iq = xmpp.Protocol('message', user, 'headline', payload=[body, app])
+	iq = xmpp.Protocol('message', user, 'headline', payload=[body, x, app])
 
 	return session.send(iq)
 
@@ -54,7 +55,7 @@ def pubsub_configure(session, user, node, model, handler):
 #################
 
 def microblog_access(session, user, model):
-	print "[pending:configure] Configuring microblog for " + user + " as " + model + "..."
+	print "[pending:configure] Configuring microblog for " + user + " as '" + model + "'..."
 
 	pubsub_configure(session, user, 'urn:xmpp:microblog:0', model, microblog_access_handle);
 
@@ -147,7 +148,7 @@ def need_pending():
 				# Notify the user
 				notifications.append({
 					'user': user,
-					'body': 'Your Jappix Me profile has been created. Check it out on ' + config.get('app', 'url') + '/' + user,
+					'body': 'Your Jappix Me profile is being created, it will be available in a few moments. Check it out on ' + config.get('app', 'url') + '/' + user,
 					
 					'data': {
 						'id': app_id,
