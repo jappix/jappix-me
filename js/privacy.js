@@ -7,16 +7,24 @@
  */
 
 
+// Credentials storage
+var USER_USERNAME = '';
+var USER_DOMAIN = '';
+var USER_PASSWORD = '';
+
 // XMPP connected handler
 function handleConnected() {
 	// Change status
 	if(con && con.connected()) {
 		// Stop waiter
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+
+		// Disconnect from XMPP (not needed then)
+		con.disconnect();
 	}
 	
 	// Back button link
-	$('#content .step .stepped a.button.back').attr('href', '/' + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc());
+	$('#content .step .stepped a.button.back').attr('href', '/' + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc());
 	
 	// Switch to next 2 steps!
 	$('#content .step').eq(0).find('input').attr('disabled', true);
@@ -39,30 +47,6 @@ function handleError() {
 	$('#content .step').eq(0).find('input').removeAttr('disabled');
 }
 
-// XMPP node public access
-function rightsAccessNode(node, value, handler) {
-	var iq = new JSJaCIQ();
-	iq.setType('set');
-	
-	// Main elements
-	var pubsub = iq.appendNode('pubsub', {'xmlns': NS_PUBSUB_OWNER});
-	var configure = pubsub.appendChild(iq.buildNode('configure', {'node': node, 'xmlns': NS_PUBSUB}));
-	var x = configure.appendChild(iq.buildNode('x', {'xmlns': NS_XDATA, 'type': 'submit'}));
-	
-	// Form type
-	var field1 = x.appendChild(iq.buildNode('field', {'var': 'FORM_TYPE', 'type': 'hidden', 'xmlns': NS_XDATA}));
-	field1.appendChild(iq.buildNode('value', {'xmlns': NS_XDATA}, NS_PUBSUB_NC));
-	
-	// Access rights
-	var field2 = x.appendChild(iq.buildNode('field', {'var': 'pubsub#access_model', 'xmlns': NS_XDATA}));
-	field2.appendChild(iq.buildNode('value', {'xmlns': NS_XDATA}, value));
-	
-	if(handler)
-		con.send(iq, handler);
-	else
-		con.send(iq);
-}
-
 // Server bot creation request
 function submitBot() {
 	var app_url = $('#config input[name="app-url"]').val();
@@ -78,7 +62,7 @@ function submitBot() {
 	var d_update = $('#content .step .stepped input[name=update]').is(':checked') ? '1' : '0';
 	var d_remove = $('#content .step .stepped input[name=remove]').is(':checked') ? '1' : '0';
 
-	$.post('/privacy/bot', {usr: con.username, srv: con.domain, pwd: con.pass, search: d_search, flagged: d_flagged, microblog: d_microblog, geoloc: d_geoloc, update: d_update, remove: d_remove}, function(data) {
+	$.post('/privacy/bot', {usr: USER_USERNAME, srv: USER_DOMAIN, pwd: USER_PASSWORD, search: d_search, flagged: d_flagged, microblog: d_microblog, geoloc: d_geoloc, update: d_update, remove: d_remove}, function(data) {
 		// Any error?
 		if(data != 'OK') {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(data);
@@ -95,12 +79,9 @@ function submitBot() {
 		$('#content .step').eq(3).removeClass('disabled');
 		
 		// Reveal the link to the profile
-		$('#content .step .stepped .reveal a').attr('href', app_url + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc());
-		$('#content .step .stepped .reveal a').html(app_url + '<b>' + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc() + '</b>');
+		$('#content .step .stepped .reveal a').attr('href', app_url + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc());
+		$('#content .step .stepped .reveal a').html(app_url + '<b>' + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc() + '</b>');
 	});
-
-	// Disconnect from XMPP (not needed then)
-	con.disconnect();
 }
 
 $(document).ready(function() {
@@ -153,24 +134,29 @@ $(document).ready(function() {
 			return false;
 		}
 
+		// Store credentials
+		USER_USERNAME = username;
+		USER_DOMAIN = domain;
+		USER_PASSWORD = password;
+
 		// Lock credentials
 		$(this).find('input').attr('disabled', true);
 
-		// Store credentials
-		oArgs = new Object();
-		oArgs.httpbase = config_xmpp_bosh;
-		oArgs.username = username;
-		oArgs.domain = domain;
-		oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
-		oArgs.pass = password;
-		oArgs.secure = true;
-		oArgs.xmllang = 'en';
-
-		con = new JSJaCHttpBindingConnection(oArgs);
-
 		// Can check credentials? (domain allowed by BOSH)
 		if(domain == config_bot_domain) {
+			// Store credentials
+			oArgs = new Object();
+			oArgs.httpbase = config_xmpp_bosh;
+			oArgs.username = username;
+			oArgs.domain = domain;
+			oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
+			oArgs.pass = password;
+			oArgs.secure = true;
+			oArgs.xmllang = 'en';
+
 			// Connect!
+			con = new JSJaCHttpBindingConnection(oArgs);
+
 			con.registerHandler('onconnect', handleConnected);
 			con.registerHandler('onerror', handleError);
 			

@@ -7,12 +7,20 @@
  */
 
 
+// Credentials storage
+var USER_USERNAME = '';
+var USER_DOMAIN = '';
+var USER_PASSWORD = '';
+
 // XMPP connected handler
 function handleConnected() {
 	// Change status
 	if(con && con.connected()) {
 		// Stop waiter
 		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+
+		// Disconnect from XMPP (not needed then)
+		con.disconnect();
 	}
 	
 	// Switch to next step!
@@ -35,7 +43,7 @@ function submitBot() {
 	// Send the bot a request
 	$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Adding to queue…').show();
 	
-	$.post('/new/bot', {usr: con.username, srv: con.domain, pwd: con.pass}, function(data) {
+	$.post('/new/bot', {usr: USER_USERNAME, srv: USER_DOMAIN, pwd: USER_PASSWORD}, function(data) {
 		// Any error?
 		if(data != 'OK') {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(data);
@@ -55,9 +63,6 @@ function submitBot() {
 		// Redirect
 		window.location.hash = 'step4';
 	});
-
-	// Disconnect from XMPP (not needed then)
-	con.disconnect();
 }
 
 // Checks if a value exists in an array
@@ -130,7 +135,7 @@ function sendInviteFriends(users) {
 			mess.setTo(users[i]);
 			mess.setSubject('Join me on Jappix Me!');
 			mess.setType('normal');
-			mess.setBody('Hey, I just created my Jappix Me profile! Jappix Me is a free tool to create your own public profile, using your social channel and lots of information from your XMPP account.\n\nIf you want to see my profile, visit: ' + app_url + con.username + '@' + con.domain + ' which will be soon available!\n\nJoin us on ' + app_url + ' and create your own profile for free! ;-)\n\n\n*This is an automated message, sent to you because one of your friends invited his buddy list to join him on Jappix Me. You will not receive it twice.*');
+			mess.setBody('Hey, I just created my Jappix Me profile! Jappix Me is a free tool to create your own public profile, using your social channel and lots of information from your XMPP account.\n\nIf you want to see my profile, visit: ' + app_url + USER_USERNAME + '@' + USER_DOMAIN + ' which will be soon available!\n\nJoin us on ' + app_url + ' and create your own profile for free! ;-)\n\n\n*This is an automated message, sent to you because one of your friends invited his buddy list to join him on Jappix Me. You will not receive it twice.*');
 			
 			con.send(mess);
 		}
@@ -152,8 +157,8 @@ function sendInviteFriends(users) {
 	$('#content .step').eq(4).removeClass('disabled');
 	
 	// Reveal the link to the profile
-	$('#content .step .stepped .reveal a').attr('href', app_url + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc());
-	$('#content .step .stepped .reveal a').html(app_url + '<b>' + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc() + '</b>');
+	$('#content .step .stepped .reveal a').attr('href', app_url + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc());
+	$('#content .step .stepped .reveal a').html(app_url + '<b>' + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc() + '</b>');
 	$('#content .step .stepped .reveal').fadeIn('slow');
 	
 	window.location.hash = 'step5';
@@ -171,8 +176,8 @@ function inviteFriends(mode, users) {
 		$('#content .step').eq(4).removeClass('disabled');
 		
 		// Reveal the link to the profile
-		$('#content .step .stepped .reveal a').attr('href', app_url + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc());
-		$('#content .step .stepped .reveal a').html(app_url + '<b>' + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc() + '</b>');
+		$('#content .step .stepped .reveal a').attr('href', app_url + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc());
+		$('#content .step .stepped .reveal a').html(app_url + '<b>' + USER_USERNAME.htmlEnc() + '@' + USER_DOMAIN.htmlEnc() + '</b>');
 		$('#content .step .stepped .reveal').fadeIn('slow');
 		
 		window.location.hash = 'step5';
@@ -255,24 +260,29 @@ $(document).ready(function() {
 			return false;
 		}
 
+		// Store credentials
+		USER_USERNAME = username;
+		USER_DOMAIN = domain;
+		USER_PASSWORD = password;
+
 		// Lock credentials
 		$(this).find('input').attr('disabled', true);
-
-		// Store credentials
-		oArgs = new Object();
-		oArgs.httpbase = config_xmpp_bosh;
-		oArgs.username = username;
-		oArgs.domain = domain;
-		oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
-		oArgs.pass = password;
-		oArgs.secure = true;
-		oArgs.xmllang = 'en';
-
-		con = new JSJaCHttpBindingConnection(oArgs);
 		
 		// Can check credentials? (domain allowed by BOSH)
 		if(domain == config_bot_domain) {
+			// Store credentials
+			oArgs = new Object();
+			oArgs.httpbase = config_xmpp_bosh;
+			oArgs.username = username;
+			oArgs.domain = domain;
+			oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
+			oArgs.pass = password;
+			oArgs.secure = true;
+			oArgs.xmllang = 'en';
+
 			// Connect!
+			con = new JSJaCHttpBindingConnection(oArgs);
+
 			con.registerHandler('onconnect', handleConnected);
 			con.registerHandler('onerror', handleError);
 			
