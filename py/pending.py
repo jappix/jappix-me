@@ -281,7 +281,12 @@ def need_pending():
 			for current_notification in notifications:
 				message_app_send(login_bot['session'], current_notification['user'], current_notification['body'], current_notification['data'])
 
-			print "[pending:main] Sent " + str(len(notifications)) + " notification messages."
+			len_notifications = len(notifications)
+
+			if len_notifications == 1:
+				print "[pending:main] Sent 1 notification message."
+			else:
+				print "[pending:main] Sent " + str(len_notifications) + " notification messages."
 		else:
 			print "[pending:main] Could not connect to bot."
 	else:
