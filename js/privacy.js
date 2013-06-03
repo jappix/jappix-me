@@ -89,6 +89,9 @@ function submitBot() {
 			return;
 		}
 		
+		// Job done!
+		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Done.');
+		
 		// Last step
 		$('#content .step').eq(2).addClass('disabled');
 		$('#content .step').eq(2).find('button').attr('disabled', true);
