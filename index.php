@@ -140,6 +140,8 @@ if($user) {
 									'pwd'    => trim($_POST['pwd']),
 									'search' => trim($_POST['search']),
 									'flagged' => trim($_POST['flagged']),
+									'microblog' => trim($_POST['microblog']),
+									'geoloc' => trim($_POST['geoloc']),
 									'update' => trim($_POST['update']),
 									'remove' => trim($_POST['remove'])
 								   );

@@ -9,7 +9,14 @@
 
 // XMPP connected handler
 function handleConnected() {
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+	// Change status
+	if(con && con.connected()) {
+		// Stop waiter
+		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+
+		// Disconnect from XMPP (not needed then)
+		con.disconnect();
+	}
 	
 	// Switch to next step!
 	$('#content .step .stepped form input').attr('disabled', true);
@@ -22,55 +29,12 @@ function handleConnected() {
 
 // XMPP error handler
 function handleError() {
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Error.');
+	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Wrong credentials.');
 	$('#content .step .stepped form input').removeAttr('disabled');
 }
 
-// XMPP disconnected handler
-function handleDisconnected() {
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Disconnected.');
-}
-
-// XMPP node public access
-function publicAccessNode(node, handler) {
-	var iq = new JSJaCIQ();
-	iq.setType('set');
-	
-	// Main elements
-	var pubsub = iq.appendNode('pubsub', {'xmlns': NS_PUBSUB_OWNER});
-	var configure = pubsub.appendChild(iq.buildNode('configure', {'node': node, 'xmlns': NS_PUBSUB}));
-	var x = configure.appendChild(iq.buildNode('x', {'xmlns': NS_XDATA, 'type': 'submit'}));
-	
-	// Form type
-	var field1 = x.appendChild(iq.buildNode('field', {'var': 'FORM_TYPE', 'type': 'hidden', 'xmlns': NS_XDATA}));
-	field1.appendChild(iq.buildNode('value', {'xmlns': NS_XDATA}, NS_PUBSUB_NC));
-	
-	// Access rights
-	var field2 = x.appendChild(iq.buildNode('field', {'var': 'pubsub#access_model', 'xmlns': NS_XDATA}));
-	field2.appendChild(iq.buildNode('value', {'xmlns': NS_XDATA}, 'open'));
-	
-	if(handler)
-		con.send(iq, handler);
-	else
-		con.send(iq);
-}
-
-// XMPP public microblog request
-function makeMicroblogPublic() {
-	$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Social channel…').show();
-	
-	publicAccessNode(NS_URN_MBLOG, makeLocationPublic);
-}
-
-// XMPP public location request
-function makeLocationPublic() {
-	$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Current location…').show();
-	
-	publicAccessNode(NS_GEOLOC, tellTheBot);
-}
-
 // Server bot creation request
-function tellTheBot() {
+function submitBot() {
 	// Send the bot a request
 	$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Adding to queue…').show();
 	
@@ -193,9 +157,6 @@ function sendInviteFriends(users) {
 	$('#content .step .stepped .reveal').fadeIn('slow');
 	
 	window.location.hash = 'step5';
-	
-	// Disconnect from XMPP
-	con.disconnect();
 }
 
 // Friend invite request
@@ -288,13 +249,16 @@ $(document).ready(function() {
 		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
 
 		// Not allowed using given server?
-		if((domain != config_bot_domain) || (domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
+		if((domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible. Must be ' + config_bot_domain).show();
 			
 			return false;
 		}
-		
-		// Account args
+
+		// Lock credentials
+		$(this).find('input').attr('disabled', true);
+
+		// Store credentials
 		oArgs = new Object();
 		oArgs.httpbase = config_xmpp_bosh;
 		oArgs.username = username;
@@ -304,25 +268,28 @@ $(document).ready(function() {
 		oArgs.secure = true;
 		oArgs.xmllang = 'en';
 
-		// Connect!
 		con = new JSJaCHttpBindingConnection(oArgs);
 		
-		con.registerHandler('onconnect', handleConnected);
-		con.registerHandler('onerror', handleError);
-		con.registerHandler('ondisconnect', handleDisconnected);
-		
-		con.connect(oArgs);
-		
-		// Connecting status
-		$(this).find('input').attr('disabled', true);
-		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+		// Can check credentials? (domain allowed by BOSH)
+		if(domain == config_bot_domain) {
+			// Connect!
+			con.registerHandler('onconnect', handleConnected);
+			con.registerHandler('onerror', handleError);
+			
+			con.connect(oArgs);
+
+			// Waiter
+			$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+		} else {
+			handleConnected();
+		}
 
 		return false;
 	});
 	
 	$('#content .step .stepped button.create').click(function() {
 		$(this).attr('disabled', true);
-		makeMicroblogPublic();
+		submitBot();
 	});
 	
 	$('#content .step .stepped button.invite').click(function() {

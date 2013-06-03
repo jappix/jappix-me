@@ -10,7 +10,13 @@
 // XMPP connected handler
 function handleConnected() {
 	// Change status
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+	if(con && con.connected()) {
+		// Stop waiter
+		$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Connected.');
+
+		// Disconnect from XMPP (not needed then)
+		con.disconnect();
+	}
 	
 	// Back button link
 	$('#content .step .stepped a.button.back').attr('href', '/' + (con.username).htmlEnc() + '@' + (con.domain).htmlEnc());
@@ -32,13 +38,8 @@ function handleConnected() {
 
 // XMPP error handler
 function handleError() {
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Error.');
+	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Wrong credentials.');
 	$('#content .step').eq(0).find('input').removeAttr('disabled');
-}
-
-// XMPP disconnected handler
-function handleDisconnected() {
-	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Disconnected.');
 }
 
 // XMPP node public access
@@ -65,52 +66,8 @@ function rightsAccessNode(node, value, handler) {
 		con.send(iq);
 }
 
-// XMPP public microblog request
-function makeMicroblogRights() {
-	// Read from form
-	var rights = null;
-	var value = $('#content .step .stepped input[name=microblog]:checked').val();
-	
-	if(value == 'public')
-		rights = 'open';
-	else if(value == 'private')
-		rights = 'presence';
-	
-	// Send rights!
-	if(rights) {
-		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Social channel…').show();
-		
-		rightsAccessNode(NS_URN_MBLOG, rights, makeLocationRights);
-	}
-	
-	else
-		makeLocationRights();
-}
-
-// XMPP public location request
-function makeLocationRights() {
-	// Read from form
-	var rights = null;
-	var value = $('#content .step .stepped input[name=geoloc]:checked').val();
-	
-	if(value == 'public')
-		rights = 'open';
-	else if(value == 'private')
-		rights = 'presence';
-	
-	// Send rights!
-	if(rights) {
-		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Current location…').show();
-		
-		rightsAccessNode(NS_GEOLOC, rights, tellTheBot);
-	}
-	
-	else
-		tellTheBot();
-}
-
 // Server bot creation request
-function tellTheBot() {
+function submitBot() {
 	var app_url = $('#config input[name="app-url"]').val();
 
 	// Send the bot a request
@@ -119,25 +76,18 @@ function tellTheBot() {
 	// Read data
 	var d_search = $('#content .step .stepped input[name=robots]:checked').val();
 	var d_flagged = $('#content .step .stepped input[name=flagged]:checked').val();
-	
-	var d_update = '0';
-	if($('#content .step .stepped input[name=update]').is(':checked'))
-		d_update = '1';
-	
-	var d_remove = '0';
-	if($('#content .step .stepped input[name=remove]').is(':checked'))
-		d_remove = '1';
-	
-	$.post('/privacy/bot', {usr: con.username, srv: con.domain, pwd: con.pass, search: d_search, flagged: d_flagged, update: d_update, remove: d_remove}, function(data) {
+	var d_microblog = $('#content .step .stepped input[name=microblog]:checked').val();
+	var d_geoloc = $('#content .step .stepped input[name=geoloc]:checked').val();
+	var d_update = $('#content .step .stepped input[name=update]').is(':checked') ? '1' : '0';
+	var d_remove = $('#content .step .stepped input[name=remove]').is(':checked') ? '1' : '0';
+
+	$.post('/privacy/bot', {usr: con.username, srv: con.domain, pwd: con.pass, search: d_search, flagged: d_flagged, microblog: d_microblog, geoloc: d_geoloc, update: d_update, remove: d_remove}, function(data) {
 		// Any error?
 		if(data != 'OK') {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(data);
 			
 			return;
 		}
-		
-		// Disconnect from XMPP
-		con.disconnect();
 		
 		// Last step
 		$('#content .step').eq(2).addClass('disabled');
@@ -194,13 +144,16 @@ $(document).ready(function() {
 		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
 
 		// Not allowed?
-		if((domain != config_bot_domain) || (domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
-			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible. Must be ' + config_bot_domain).show();
+		if((domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
+			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text('Server not eligible.').show();
 			
 			return false;
 		}
 
-		// Connect!
+		// Lock credentials
+		$(this).find('input').attr('disabled', true);
+
+		// Store credentials
 		oArgs = new Object();
 		oArgs.httpbase = config_xmpp_bosh;
 		oArgs.username = username;
@@ -210,18 +163,21 @@ $(document).ready(function() {
 		oArgs.secure = true;
 		oArgs.xmllang = 'en';
 
-		// Domain not in serviced ones?
 		con = new JSJaCHttpBindingConnection(oArgs);
-		
-		con.registerHandler('onconnect', handleConnected);
-		con.registerHandler('onerror', handleError);
-		con.registerHandler('ondisconnect', handleDisconnected);
-		
-		con.connect(oArgs);
-		
-		// Connecting status
-		$(this).find('input').attr('disabled', true);
-		$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+
+		// Can check credentials? (domain allowed by BOSH)
+		if(domain == config_bot_domain) {
+			// Connect!
+			con.registerHandler('onconnect', handleConnected);
+			con.registerHandler('onerror', handleError);
+			
+			con.connect(oArgs);
+
+			// Waiter
+			$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();
+		} else {
+			handleConnected();
+		}
 
 		return false;
 	});
@@ -257,7 +213,8 @@ $(document).ready(function() {
 		
 		// Save!
 		$(this).attr('disabled', true);
-		makeMicroblogRights();
+
+		submitBot();
 	});
 	
 	// Apply placeholder

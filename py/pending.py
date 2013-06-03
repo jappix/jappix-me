@@ -188,11 +188,13 @@ def need_pending():
 
 					# Update profile data
 					if os.path.exists(current_cache + '/system'):
+						# Update?
 						if current_data['update'] == '1':
 							last_file = open(current_cache + '/system/last', 'w')
 				   			last_file.write('0')
 							last_file.close()
 
+						# Flagged?
 						if current_data['flagged'] == '1':
 							flagged_file = open(current_cache + '/system/flagged', 'w')
 			   				flagged_file.write(phpserialize.dumps('1'))
@@ -203,6 +205,7 @@ def need_pending():
 			   				flagged_file.write(phpserialize.dumps('0'))
 							flagged_file.close()
 						
+						# Search?
 						if current_data['search'] == '1':
 							search_file = open(current_cache + '/system/search', 'w')
 			   				search_file.write(phpserialize.dumps('1'))
@@ -212,6 +215,25 @@ def need_pending():
 							search_file = open(current_cache + '/system/search', 'w')
 			   				search_file.write(phpserialize.dumps('0'))
 							search_file.close()
+
+						# Microblog?
+						if current_data['microblog'] == 'public':
+							microblog_access(login_result['session'], user, 'open')
+						
+						else:
+							microblog_access(login_result['session'], user, 'presence')
+
+							os.remove(current_cache + '/pubsub/microblog')
+							os.remove(current_cache + '/pubsub/pictures')
+
+						# Geoloc?
+						if current_data['geoloc'] == 'public':
+							geoloc_access(login_result['session'], user, 'open')
+						
+						else:
+							geoloc_access(login_result['session'], user, 'presence')
+
+							os.remove(current_cache + '/pubsub/geoloc')
 
 					# Notify the user
 					notifications.append({
