@@ -227,7 +227,7 @@ def need_pending():
 						if current_data['microblog'] == 'public':
 							microblog_access(login_result['session'], user, 'open')
 						
-						else current_data['microblog'] == 'private':
+						elif current_data['microblog'] == 'private':
 							microblog_access(login_result['session'], user, 'presence')
 
 							microblog_cache = current_cache + '/pubsub/microblog'
@@ -243,7 +243,7 @@ def need_pending():
 						if current_data['geoloc'] == 'public':
 							geoloc_access(login_result['session'], user, 'open')
 						
-						else current_data['geoloc'] == 'private':
+						elif current_data['geoloc'] == 'private':
 							geoloc_access(login_result['session'], user, 'presence')
 
 							geoloc_cache = current_cache + '/pubsub/geoloc'
