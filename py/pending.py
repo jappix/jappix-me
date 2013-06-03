@@ -40,16 +40,16 @@ def message_app_send(session, user, body, app_data):
 ##############
 
 def pubsub_configure(session, user, node, model, handler):
-	value_access = xmpp.Node('value', payload=[xmpp.NS_PUBSUB + '#node_config'])
+	value_access = xmpp.Node('value', payload=[model])
 	field_access = xmpp.Node('field', attrs={'var': 'pubsub#access_model'}, payload=[value_access])
 
-	value_type = xmpp.Node('value', payload=[model])
+	value_type = xmpp.Node('value', payload=[xmpp.NS_PUBSUB + '#node_config'])
 	field_type = xmpp.Node('field', attrs={'var': 'FORM_TYPE', 'type': 'hidden'}, payload=[value_type])
 
 	x = xmpp.Node('x', attrs={'xmlns': xmpp.NS_DATA, 'type': 'submit'}, payload=[field_type, field_access])
 	configure = xmpp.Node('configure', attrs={'xmlns': xmpp.NS_PUBSUB, 'node': node}, payload=[x])
 	pubsub = xmpp.Node('pubsub', attrs={'xmlns': xmpp.NS_PUBSUB + '#owner'}, payload=[configure])
-	iq = xmpp.Protocol('iq', user, 'set', payload=[pubsub])
+	iq = xmpp.Protocol('iq', '', 'set', payload=[pubsub])
 
 	return session.SendAndCallForResponse(iq, handler)
 
