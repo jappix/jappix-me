@@ -290,7 +290,7 @@ def need_pending():
 		else:
 			print "[pending:main] Could not connect to bot."
 	else:
-		print "[pending:main] No notification message to send."
+		print "[pending:main] Nothing to do (no pending user)."
 
 
 ################
