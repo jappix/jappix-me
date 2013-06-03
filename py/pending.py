@@ -20,21 +20,6 @@ BASE_DIR = config.path()
 ###############
 
 def message_app_send(session, user, body, app_data):
-	'''
-	<message xmlns="jabber:client" to="valerian@jappix.com" id="31" type="chat" xml:lang="fr">
-		<body>Hey</body>
-
-		<app xmlns="jappix:app">
-			<name id="me">Jappix Me</name>
-			
-			<data xmlns="jappix:app:me">
-				<action type="profile" job="new" success="1" />
-				<url>https://me.jappix.com/jid@server.tld</url>
-			</data>
-		</app>
-	</message>
-	'''
-
 	url = xmpp.Node('url', payload=[app_data['url']])
 	action = xmpp.Node('action', attrs={'type': app_data['type'], 'job': app_data['job'], 'success': app_data['success']})
 	
