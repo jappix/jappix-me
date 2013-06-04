@@ -267,6 +267,10 @@ def need_pending():
 						}
 					})
 
+			# Let it run 5 seconds max per user
+			for i in range(5):
+				con.Process(1)
+
 			# Close connection
 			(login_result['session']).disconnect()
 
@@ -295,6 +299,8 @@ def need_pending():
 
 	# Send notification messages (if any)
 	if notifications:
+		print "[pending:main] Connecting to bot..."
+
 		login_bot = login(config.get('bot', 'username'), config.get('bot', 'domain'), config.get('bot', 'password'))
 
 		if login_bot['success']:
@@ -307,6 +313,15 @@ def need_pending():
 				print "[pending:main] Sent 1 notification message."
 			else:
 				print "[pending:main] Sent " + str(len_notifications) + " notification messages."
+
+			# Let it run 5 seconds max
+			for i in range(5):
+				con.Process(1)
+
+			# Close connection
+			(login_bot['session']).disconnect()
+
+			print "[pending:main] Disconnected from bot."
 		else:
 			print "[pending:main] Could not connect to bot."
 	else:
