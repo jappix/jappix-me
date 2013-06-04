@@ -267,9 +267,8 @@ def need_pending():
 						}
 					})
 
-			# Let it run 5 seconds max per user
-			for i in range(5):
-				(login_result['session']).Process(1)
+			# Let it run 1 second max per user
+			(login_result['session']).Process(1)
 
 			# Close connection
 			(login_result['session']).disconnect()
@@ -314,9 +313,8 @@ def need_pending():
 			else:
 				print "[pending:main] Sent " + str(len_notifications) + " notification messages."
 
-			# Let it run 5 seconds max
-			for i in range(5):
-				(login_bot['session']).Process(1)
+			# Let it run 1 second max after packets are sent
+			(login_bot['session']).Process(1)
 
 			# Close connection
 			(login_bot['session']).disconnect()
