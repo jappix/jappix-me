@@ -183,7 +183,7 @@ def need_pending():
 							'id': app_id,
 							'name': app_name,
 
-							'url': config.get('app', 'url') + '/',
+							'url': config.get('app', 'url') + '/' + user,
 							'type': 'profile',
 							'job': 'remove',
 							'success': '1'
@@ -260,7 +260,7 @@ def need_pending():
 							'id': app_id,
 							'name': app_name,
 
-							'url': config.get('app', 'url') + '/',
+							'url': config.get('app', 'url') + '/' + user,
 							'type': 'profile',
 							'job': 'update',
 							'success': '1'
