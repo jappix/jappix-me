@@ -143,7 +143,7 @@ function sendInviteFriends(users) {
 	}
 	
 	// Job done!
-	var invite_result = 'No friend invited.';
+	var invite_result = 'All done.';
 	
 	if(users.length == 1)
 		invite_result = '1 friend invited.';
