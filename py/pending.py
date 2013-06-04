@@ -269,7 +269,7 @@ def need_pending():
 
 			# Let it run 5 seconds max per user
 			for i in range(5):
-				con.Process(1)
+				(login_result['session']).Process(1)
 
 			# Close connection
 			(login_result['session']).disconnect()
@@ -316,7 +316,7 @@ def need_pending():
 
 			# Let it run 5 seconds max
 			for i in range(5):
-				con.Process(1)
+				(login_bot['session']).Process(1)
 
 			# Close connection
 			(login_bot['session']).disconnect()
