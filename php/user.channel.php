@@ -42,9 +42,9 @@ if($entry_id) {
 	$chan_arr = genChannel($user, $user_microblog, 1, 1, $entry_id);
 	
 	if($entry_id_prev)
-		echo '<a class="navigation previous" href="/'.htmlspecialchars($user).'/channel/'.htmlspecialchars($entry_id_prev).'">« Previous entry</a>';
+		echo '<a class="navigation next" href="/'.htmlspecialchars($user).'/channel/'.htmlspecialchars($entry_id_prev).'">« Next entry</a>';
 	if($entry_id_next)
-		echo '<a class="navigation next" href="/'.htmlspecialchars($user).'/channel/'.htmlspecialchars($entry_id_next).'">Next entry »</a>';
+		echo '<a class="navigation previous" href="/'.htmlspecialchars($user).'/channel/'.htmlspecialchars($entry_id_next).'">Previous entry »</a>';
 	
 	genComments($user, $user_fn, $chan_arr['post'], $chan_arr['comments']);
 	

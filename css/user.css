@@ -666,11 +666,11 @@ abbr {
 	background-image: url(/img/gotop.png);
 }
 
-#content .wrapper a.navigation.previous {
+#content .wrapper a.navigation.next {
 	float: left;
 }
 
-#content .wrapper a.navigation.next {
+#content .wrapper a.navigation.previous {
 	float: right;
 }
 
