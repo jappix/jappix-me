@@ -494,13 +494,13 @@ $(document).keyup(function(e) {
 	if(!nav_path)
 		return;
 	
-	// Previous item?
-	if(e.keyCode == 37)
-		nav_href = $('#content .wrapper.' + nav_path + ' a.navigation.previous').click().focus().attr('href');
-	
 	// Next item?
-	if(e.keyCode == 39)
+	if(e.keyCode == 37)
 		nav_href = $('#content .wrapper.' + nav_path + ' a.navigation.next').click().focus().attr('href');
+	
+	// Previous item?
+	if(e.keyCode == 39)
+		nav_href = $('#content .wrapper.' + nav_path + ' a.navigation.previous').click().focus().attr('href');
 	
 	// Change the page?
 	if(nav_href)
