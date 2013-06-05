@@ -64,8 +64,8 @@ def microblog_access(session, user, model):
 	pubsub_configure(session, user, 'urn:xmpp:microblog:0', model, microblog_access_handle);
 
 def microblog_access_handle(session, stanza):
-	user_from = str(stanza.getFrom())
-	
+	user_from = str(stanza.getFrom()) or str(stanza.getTo())
+
 	if stanza.getType() != 'error':
 		print "[pending:configure] Configured microblog for " + user_from + "."
 	else:
@@ -77,7 +77,7 @@ def geoloc_access(session, user, model):
 	pubsub_configure(session, user, xmpp.NS_GEOLOC, model, geoloc_access_handle);
 
 def geoloc_access_handle(session, stanza):
-	user_from = str(stanza.getFrom())
+	user_from = str(stanza.getFrom()) or str(stanza.getTo())
 	
 	if stanza.getType() != 'error':
 		print "[pending:configure] Configured geoloc for " + user_from + "."
