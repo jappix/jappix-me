@@ -29,9 +29,9 @@ if($pix_id) {
 	echo '<div class="middle"><a class="medium" href="'.htmlspecialchars($pix_href).'" target="_blank" title="'.htmlspecialchars($pix_title).'"><img src="'.htmlspecialchars($pix_href).'" alt="" /></a></div>';
 	
 	if($pix_prev && $pix_pthumb)
-		echo '<a class="navigation thumb previous" href="/'.htmlspecialchars($user).'/pictures/'.htmlspecialchars($pix_prev).'#content" title="« Previous picture"><img src="'.htmlspecialchars($pix_pthumb).'" alt="" /></a>';
+		echo '<a class="navigation thumb next" href="/'.htmlspecialchars($user).'/pictures/'.htmlspecialchars($pix_prev).'#content" title="« Previous picture"><img src="'.htmlspecialchars($pix_pthumb).'" alt="" /></a>';
 	if($pix_next && $pix_nthumb)
-		echo '<a class="navigation thumb next" href="/'.htmlspecialchars($user).'/pictures/'.htmlspecialchars($pix_next).'#content" title="Next picture »"><img src="'.htmlspecialchars($pix_nthumb).'" alt="" /></a>';
+		echo '<a class="navigation thumb previous" href="/'.htmlspecialchars($user).'/pictures/'.htmlspecialchars($pix_next).'#content" title="Next picture »"><img src="'.htmlspecialchars($pix_nthumb).'" alt="" /></a>';
 	
 	genComments($user, $user_fn, $pix_post, $pix_comments);
 }
