@@ -26,7 +26,7 @@ if(isset($user_vcard['vcard'])) {
 
 <div class="info">Find your own way to contact <em><?php echo htmlspecialchars($user_fn); ?></em>!</div>
 
-<h4>Have a chat with me (XMPP)</h4>
+<h4>Chat</h4>
 <div class="tabulate">
 	<p>Use your XMPP account (<b><a href="https://jappix.com/" target="_blank">don't have one?</a></b>) to <b>chat with <em><?php echo htmlspecialchars($user_fn); ?></em></b>. You should <b><a href="xmpp:<?php echo htmlspecialchars($user); ?>?subscribe" target="_blank">add <em><?php echo htmlspecialchars($user_fn); ?></em></a></b> to your friend list before you start a chat with <em><?php echo htmlspecialchars($user_fn); ?></em> (you will see when <em><?php echo htmlspecialchars($user_fn); ?></em> will be online).</p>
 	<p>If you cannot open the XMPP link below, you should configure your client to open these links (i.e. <a href="https://jappix.com/" target="_blank">Jappix</a> settings).</p>
@@ -34,7 +34,7 @@ if(isset($user_vcard['vcard'])) {
 </div>
 
 <?php if(!empty($user_mail)) { ?>
-<h4>Send me an e-mail</h4>
+<h4>E-Mail</h4>
 <div class="tabulate">
 	<p><b>Send an e-mail to <em><?php echo htmlspecialchars($user_fn); ?></em></b> with the address (or multiple addresses) below.</p>
 	<?php foreach($user_mail as $user_mail_type => $user_mail_value) { ?>
@@ -44,7 +44,7 @@ if(isset($user_vcard['vcard'])) {
 <?php } ?>
 
 <?php if(!empty($user_phone)) { ?>
-<h4>Call me</h4>
+<h4>Phone</h4>
 <div class="tabulate">
 	<p><b>Call <em><?php echo htmlspecialchars($user_fn); ?></em></b> using the phone number (or multiple numbers) below.</p>
 	<p><em><?php echo htmlspecialchars($user_fn); ?></em>'s phone may not be located in the same country as yours. <b>Some extra costs may apply</b> for international calls (depending of your telephone or mobile phone operator).</p>
@@ -55,7 +55,7 @@ if(isset($user_vcard['vcard'])) {
 <?php } ?>
 
 <?php if(!empty($user_address)) { ?>
-<h4>Send me a postcard</h4>
+<h4>Post</h4>
 <div class="tabulate">
 	<p>Contact <em><?php echo htmlspecialchars($user_fn); ?></em> <b>through the postal way</b> with the address (or multiple addresses) below.</p>
 	<?php foreach($user_address as $user_address_type => $user_address_value) { ?>
