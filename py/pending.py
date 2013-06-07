@@ -171,6 +171,11 @@ def need_pending():
 				if current_data['remove'] == '1':
 					print "[pending:remove] Removing user " + user + "..."
 
+					# Make microblog & geoloc private
+					microblog_access(login_result['session'], user, 'presence')
+					geoloc_access(login_result['session'], user, 'presence')
+
+					# Remove user from filesystem
 					if os.path.exists(current_cache):
 						shutil.rmtree(current_cache)
 
