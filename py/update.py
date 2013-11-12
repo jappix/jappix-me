@@ -144,7 +144,7 @@ def handle_geoloc(session, stanza):
 # Logins to XMPP
 def login():
     con = xmpp.Client(config.get('bot', 'domain'), debug=[])
-    connector = con.connect(server=(config.get('bot', 'domain'), 5222), secure=False)
+    connector = con.connect(server=(config.get('bot', 'domain'), 5222))
     
     if connector and con.auth(config.get('bot', 'username'), config.get('bot', 'password'), 'Jappix Me (UB' + str(int(time.time())) + ')'):
     	return con
