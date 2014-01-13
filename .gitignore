@@ -1,7 +1,7 @@
 *.py[co]
 .DS_Store
 *.esproj
-config.xml
+#config.xml
 cache/
 pending/
 test/node_modules/

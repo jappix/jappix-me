@@ -373,7 +373,7 @@ if($page == '404') {
 	<link rel="alternate" type="application/atom+xml" href="/<?php echo htmlspecialchars($user); ?>/feed" />
 	<?php } if(($page == 'user') || ($page == 'new') || ($page == 'privacy')) { ?>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-	<script type="text/javascript" src="//<?php echo getConfig('app', 'static'); ?>/php/get.php?l=en&amp;t=js&amp;f=common.js~utilities.js~browser-detect.js~constants.js~datastore.js~jsjac.js~jquery.placeholder.js~date.js"></script>
+	<script type="text/javascript" src="//<?php echo getConfig('app', 'static'); ?>/server/get.php?l=en&amp;t=js&amp;f=common.js~utilities.js~browser-detect.js~constants.js~datastore.js~jsjac.js~jquery.placeholder.js~date.js"></script>
 	<script type="text/javascript" src="/js/<?php echo $page; ?>.js"></script>
 	<?php } if(($page == 'user') && (($user_search == '0') || ($user_flagged == '1'))) { ?>
 	<meta name="robots" content="noindex, nofollow" />
