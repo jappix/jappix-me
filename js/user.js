@@ -56,7 +56,7 @@ function initComments() {
 	var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
 	var config_xmpp_websocket = $('#config input[name="xmpp-websocket"]').val();
 	
-	if(JappixCommon.hasWebSocket()) {
+	if(config_xmpp_websocket && typeof window.WebSocket !== undefined) {
 		con = new JSJaCWebSocketConnection({
 			httpbase: config_xmpp_websocket
 		});

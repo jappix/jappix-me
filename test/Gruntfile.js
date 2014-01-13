@@ -42,6 +42,10 @@ module.exports = function(grunt) {
 
         src: [
           '../css/*.css'
+
+          // Ignored files
+          '!../app/stylesheets/ie6.css',
+          '!../app/stylesheets/ie7.css'
         ]
       }
     },

@@ -71,9 +71,9 @@ div.flagged span.flag {
 	left: 0;
 	right: 0;
 	top: 0;
-	box-shadow: 0 0 3px #575757;
 	-moz-box-shadow: 0 0 3px #575757;
 	-webkit-box-shadow: 0 0 3px #575757;
+	box-shadow: 0 0 3px #575757;
 }
 
 noscript span.noscript span,
@@ -160,9 +160,9 @@ abbr {
 	text-decoration: none;
 	padding: 6px 9px;
 	float: right;
-	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #top .button:hover,
@@ -233,9 +233,9 @@ abbr {
 	padding: 10px 0;
 	position: relative;
 	z-index: 10;
-	box-shadow: 0 0 15px #b0b0b0;
 	-moz-box-shadow: 0 0 15px #b0b0b0;
 	-webkit-box-shadow: 0 0 15px #b0b0b0;
+	box-shadow: 0 0 15px #b0b0b0;
 }
 
 #quicklook.birthday {
@@ -252,25 +252,25 @@ abbr {
 	height: 104px;
 	margin-left: 35px;
 	float: left;
-	rotation: 352deg;
 	-webkit-transform: rotate(352deg);
 	-moz-transform: rotate(352deg);
 	-o-transform:rotate(352deg);
 	-ms-transform:rotate(352deg);
-	box-shadow: 0 0 15px #0b0b0b;
+	rotation: 352deg;
 	-moz-box-shadow: 0 0 15px #0b0b0b;
 	-webkit-box-shadow: 0 0 15px #0b0b0b;
+	box-shadow: 0 0 15px #0b0b0b;
 }
 
 #quicklook .avatarize:hover {
-	rotation: 345deg;
 	-webkit-transform: rotate(345deg);
 	-moz-transform: rotate(345deg);
 	-o-transform:rotate(345deg);
 	-ms-transform:rotate(345deg);
-	box-shadow: 0 0 30px black;
+	rotation: 345deg;
 	-moz-box-shadow: 0 0 30px black;
 	-webkit-box-shadow: 0 0 30px black;
+	box-shadow: 0 0 30px black;
 }
 
 #quicklook .avatarize .avatar {
@@ -600,9 +600,9 @@ abbr {
 #content .wrapper.pictures a.medium img:hover,
 #content .wrapper.pictures a.medium:focus img {
 	border-color: #464646;
-	box-shadow: 0 0 15px #a2a2a2b;
 	-moz-box-shadow: 0 0 15px #a2a2a2;
 	-webkit-box-shadow: 0 0 15px #a2a2a2;
+	box-shadow: 0 0 15px #a2a2a2b;
 }
 
 #content .wrapper.channel .tabulate .right .attached a img:hover,
@@ -611,14 +611,14 @@ abbr {
 #content .wrapper.pictures a.thumb:focus img {
 	border-color: #464646;
 	opacity: 1;
-	rotation: 355deg;
 	-webkit-transform: rotate(355deg);
 	-moz-transform: rotate(355deg);
 	-o-transform:rotate(355deg);
 	-ms-transform:rotate(355deg);
-	box-shadow: 0 0 15px #a2a2a2b;
+	rotation: 355deg;
 	-moz-box-shadow: 0 0 15px #a2a2a2;
 	-webkit-box-shadow: 0 0 15px #a2a2a2;
+	box-shadow: 0 0 15px #a2a2a2b;
 }
 
 #content .wrapper.pictures a.previous img,
@@ -629,11 +629,11 @@ abbr {
 
 #content .wrapper.pictures a.next img:hover,
 #content .wrapper.pictures a.next:focus img {
-	rotation: 5deg;
 	-webkit-transform: rotate(5deg);
 	-moz-transform: rotate(5deg);
 	-o-transform:rotate(5deg);
 	-ms-transform:rotate(5deg);
+	rotation: 5deg;
 }
 
 #content .wrapper .loading {
@@ -703,9 +703,9 @@ abbr {
 	margin: 10px auto 0 auto;
 	padding: 8px 10px;
 	display: block;
-	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 }
 
 #content .wrapper .comments .comments-content a.comments-load:hover,
@@ -793,9 +793,9 @@ abbr {
 	margin: 6px 0 4px 10px;
 	padding: 3px 6px 4px 6px;
 	display: block;
-	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 }
 
 #content .wrapper .comments .comments-form textarea {

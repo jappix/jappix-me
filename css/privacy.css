@@ -67,9 +67,9 @@ noscript span.noscript {
 	left: 0;
 	right: 0;
 	top: 0;
-	box-shadow: 0 0 3px #575757;
 	-moz-box-shadow: 0 0 3px #575757;
 	-webkit-box-shadow: 0 0 3px #575757;
+	box-shadow: 0 0 3px #575757;
 }
 
 noscript span.noscript span {
@@ -93,9 +93,9 @@ input.submit,
 	padding: 6px 9px;
 	cursor: pointer;
 	float: left;
-	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 button:hover,
@@ -191,9 +191,9 @@ button {
 	font-size: 0.9em;
 	text-shadow: 1px 1px 2px black;
 	padding: 10px 0;
-	box-shadow: 0 0 15px #b0b0b0;
 	-moz-box-shadow: 0 0 15px #b0b0b0;
 	-webkit-box-shadow: 0 0 15px #b0b0b0;
+	box-shadow: 0 0 15px #b0b0b0;
 }
 
 #content {
@@ -248,15 +248,15 @@ button {
 	margin-top: -4px;
 	padding: 3px 6px 4px 6px;
 	float: right;
-	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 }
 
 #content .step .stepped form label input:focus {
-	box-shadow: 0 0 5px #b0b0b0;
 	-moz-box-shadow: 0 0 5px #b0b0b0;
 	-webkit-box-shadow: 0 0 5px #b0b0b0;
+	box-shadow: 0 0 5px #b0b0b0;
 }
 
 #content .step .stepped .status {
