@@ -12,28 +12,30 @@ function handleConnected() {
 	var param_server = $('#content .wrapper .comments').attr('data-server');
 	var param_node = $('#content .wrapper .comments').attr('data-node');
 	
-	if(param_server && param_node)
+	if(param_server && param_node) {
 		getComments(param_server, param_node);
+	}
 }
 
 // XMPP error handler
 function handleError() {
-	removeDB('jappix-me', 'stamp');
+	DataStore.removeDB('me', 'jappix-me', 'stamp');
 	errorComments('Error. Retry?');
 }
 
 // XMPP disconnected handler
 function handleDisconnected() {
-	removeDB('jappix-me', 'stamp');
+	DataStore.removeDB('me', 'jappix-me', 'stamp');
 	errorComments('Disconnected. Reconnect?');
 }
 
 // XMPP session save
 function saveSession() {
-	if(!isConnected())
+	if(!isConnected()) {
 		return;
+	}
 	
-	setDB('jappix-me', 'stamp', getTimeStamp());
+	DataStore.setDB('me', 'jappix-me', 'stamp', DateUtils.getTimeStamp());
 	con.suspend(false);
 }
 
@@ -50,7 +52,7 @@ function initComments() {
 	$('#content .wrapper .comments .comments-load').replaceWith('<span class="comments-loading">Loading comments...</span>');
 	
 	// Can resume?
-	var stamp = parseInt(getDB('jappix-me', 'stamp'));
+	var stamp = parseInt(DataStore.getDB('me', 'jappix-me', 'stamp'));
 	var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
 	var config_xmpp_websocket = $('#config input[name="xmpp-websocket"]').val();
 	
@@ -70,7 +72,7 @@ function initComments() {
 	con.registerHandler('ondisconnect', handleDisconnected);
 	
 	// Must connect!
-	if(((getTimeStamp() - stamp) >= JSJACHBC_MAX_WAIT) || !con.resume()) {
+	if(((DateUtils.getTimeStamp() - stamp) >= JSJACHBC_MAX_WAIT) || !con.resume()) {
 		con.connect({
 			domain = $('#config input[name="xmpp-domain"]').val(),
 			authtype = 'saslanon',
@@ -111,41 +113,46 @@ function handleComments(iq) {
 	var anon_domain = $('#config input[name="xmpp-domain"]').val();
 	var path = '#content .wrapper .comments .comments-content';
 	var data = iq.getNode();
-	var server = bareXID(getStanzaFrom(iq));
+	var server = Common.bareXID(getStanzaFrom(iq));
 	var code = '';
 	
 	// Append the comments
 	$(data).find('item').each(function() {
 		// Get comment
-		var current_xid = explodeThis(':', $(this).find('author uri').text(), 1);
+		var current_xid = Common.explodeThis(':', $(this).find('author uri').text(), 1);
 		var current_name = $(this).find('author name').text();
 		var current_date = $(this).find('published').text();
 		var current_body = $(this).find('content[type=text]').text();
 		var current_bname = current_xid;
 		
-		if(current_date)
-			current_date = explodeThis(' - ', relativeDate(current_date), 0);
-		else
+		if(current_date) {
+			current_date = Common.explodeThis(' - ', relativeDate(current_date), 0);
+		} else {
 			current_date = '';
+		}
 		
-		if(!current_body)
+		if(!current_body) {
 			current_body = $(this).find('title:not(source > title)').text();
+		}
 		
-		if(!current_xid)
+		if(!current_xid) {
 			current_xid = '';
+		}
 		
-		if(!current_name && current_xid && current_xid.match('@') && (getXIDHost(current_xid) != anon_domain))
-			current_name = getXIDNick(current_xid);
+		if(!current_name && current_xid && current_xid.match('@') && (Common.getXIDHost(current_xid) != anon_domain)) {
+			current_name = Common.getXIDNick(current_xid);
+		}
 		
-		if(!current_name)
+		if(!current_name) {
 			current_name = '<em>Anonymous</em>';
-		else
+		} else {
 			current_name.htmlEnc();
+		}
 		
 		var current_profile = app_url + 'unknown@' + anon_domain;
 		var current_real = false;
 		
-		if(current_xid && current_xid.match('@') && (getXIDHost(current_xid) != anon_domain)) {
+		if(current_xid && current_xid.match('@') && (Common.getXIDHost(current_xid) != anon_domain)) {
 			current_profile = app_url + current_xid.htmlEnc();
 			current_real = true;
 		}
@@ -156,15 +163,13 @@ function handleComments(iq) {
 		if(current_real) {
 			current_avatarlink = '<a href="' + current_profile + '" target="_blank"><img class="avatar" src="' + current_profile + '/avatar/32.png" alt="" /></a>';
 			current_namelink = '<a class="name" href="' + current_profile + '" target="_blank">' + current_name + '</a>';
-		}
-		
-		else {
+		} else {
 			current_avatarlink = '<img class="avatar" src="' + current_profile + '/avatar/32.png" alt="" />';
 			current_namelink = '<span class="name">' + current_name + '</span>';
 		}
 		
-		if(current_body)
-			code = '<div class="tabulate" data-author="' + encodeQuotes(current_xid) + '">' + 
+		if(current_body) {
+			code = '<div class="tabulate" data-author="' + Common.encodeQuotes(current_xid) + '">' + 
 						current_avatarlink + 
 						
 						'<div class="comment-container">' + 
@@ -175,12 +180,14 @@ function handleComments(iq) {
 						
 						'<div class="clear"></div>' + 
 					'</div>' + code;
+		}
 	});
 	
-	if(code)
+	if(code) {
 		$(path).html(code);
-	else
+	} else {
 		$('#content .wrapper .comments .comments-loading').replaceWith('<span class="comments-nothing">No comments... Yet!</span>');
+	}
 	
 	$('#content .wrapper .comments .comments-form input.submit').removeAttr('disabled');
 }
@@ -188,8 +195,9 @@ function handleComments(iq) {
 // Sends a comment on a given microblog comments node
 function sendComment() {
 	try {
-		if($('#content .wrapper .comments .comments-form input.submit').is(':disabled'))
+		if($('#content .wrapper .comments .comments-form input.submit').is(':disabled')) {
 			return false;
+		}
 		
 		// Read data
 		var app_url = $('#config input[name="app-url"]').val();
@@ -200,12 +208,13 @@ function sendComment() {
 		var node = $('#content .wrapper .comments').attr('data-node');
 		
 		// Not enough data?
-		if(!name || !value || !server || !node)
+		if(!name || !value || !server || !node) {
 			return false;
+		}
 		
 		$('#content .wrapper .comments .comments-form *').attr('disabled', true);
 		
-		var date = getXMPPTime('utc');
+		var date = DateUtils.getXMPPTime('utc');
 		var hash = hex_md5(value + date);
 		
 		var iq = new JSJaCIQ();
@@ -230,9 +239,9 @@ function sendComment() {
 		con.send(iq, handleSendComment);
 		
 		// Display the comment
-		var current_date = explodeThis(' - ', relativeDate(date), 0);
+		var current_date = Common.explodeThis(' - ', DateUtils.relative(date), 0);
 		
-		var code = '<div id="' + hash + '" class="tabulate" style="display: none;" data-author="' + encodeQuotes('unknown@' + anon_domain) + '">' + 
+		var code = '<div id="' + hash + '" class="tabulate" style="display: none;" data-author="' + Common.encodeQuotes('unknown@' + anon_domain) + '">' + 
 						'<img class="avatar" src="' + app_url + 'unknown@' + anon_domain + '/avatar/32.png" alt="" />' + 
 						
 						'<div class="comment-container">' + 
@@ -245,10 +254,11 @@ function sendComment() {
 						'<div class="clear"></div>' + 
 					'</div>';
 		
-		if(!$('#content .wrapper .comments .comments-content .tabulate').size())
+		if(!$('#content .wrapper .comments .comments-content .tabulate').size()) {
 			$('#content .wrapper .comments .comments-content').html(code);
-		else
+		} else {
 			$('#content .wrapper .comments .comments-content .tabulate:last').after(code);
+		}
 		
 		$('#content .wrapper .comments .comments-content .tabulate#' + hash + ' a.cancel').click(function() {
 			cancelComment(server, node, hash);
@@ -269,17 +279,20 @@ function sendComment() {
 		$('#content .wrapper .comments .comments-content .tabulate').each(function() {
 			var current_author = $(this).attr('data-author');
 			
-			if(current_author && current_author.match('@') && (getXIDHost(current_author) != anon_domain) && !existArrayValue(followers, current_author))
+			if(current_author && current_author.match('@') && (Common.getXIDHost(current_author) != anon_domain) && !existArrayValue(followers, current_author)) {
 				followers.push(current_author);
+			}
 		});
 		
 		var owner_xid = $('#content .wrapper .comments').attr('data-owner');
-		if(owner_xid && !existArrayValue(followers, owner_xid))
+		if(owner_xid && !existArrayValue(followers, owner_xid)) {
 			followers.push(owner_xid);
+		}
 		
 		var repeated_xid = $('#content .wrapper.channel .tabulate .right .meta .repeat').attr('data-xid');
-		if(repeated_xid && !existArrayValue(followers, repeated_xid))
+		if(repeated_xid && !existArrayValue(followers, repeated_xid)) {
 			followers.push(repeated_xid);
+		}
 		
 		// Notify users
 		if(followers && followers.length) {
@@ -288,8 +301,9 @@ function sendComment() {
 			var parent_select = $('#content .wrapper .comments');
 			var parent_data = [parent_select.attr('data-owner'), NS_URN_MBLOG, parent_select.attr('data-post')];
 			
-			for(n in followers)
+			for(n in followers) {
 				sendNotification(followers[n], 'unknown@' + anon_domain, name, 'comment', item_href, value, parent_data);
+			}
 		}
 	}
 	
@@ -302,8 +316,9 @@ function sendComment() {
 
 // Handles the comment publishing
 function handleSendComment(iq) {
-	if(iq.getType() == 'error')
+	if(iq.getType() == 'error') {
 		return;
+	}
 	
 	$('#content .wrapper .comments .comments-form input.name').val('');
 	$('#content .wrapper .comments .comments-form textarea.body').val('');
@@ -332,7 +347,7 @@ function cancelComment(server, node, id) {
 // Sends a social notification
 function sendNotification(xid, my_xid, my_name, type, href, text, parent) {
 	// Notification ID
-	var id = hex_md5(xid + text + getTimeStamp());
+	var id = hex_md5(xid + text + DateUtils.getTimeStamp());
 	
 	// IQ
 	var iq = new JSJaCIQ();
@@ -351,7 +366,7 @@ function sendNotification(xid, my_xid, my_name, type, href, text, parent) {
 	author.appendChild(iq.buildNode('uri', {'xmlns': NS_ATOM}, 'xmpp:' + my_xid));
 	
 	// Notification content
-	entry.appendChild(iq.buildNode('published', {'xmlns': NS_ATOM}, getXMPPTime('utc')));
+	entry.appendChild(iq.buildNode('published', {'xmlns': NS_ATOM}, DateUtils.getXMPPTime('utc')));
 	entry.appendChild(iq.buildNode('content', {'type': 'text', 'xmlns': NS_ATOM}, text));
 	entry.appendChild(iq.buildNode('link', {'rel': 'via', 'title': type, 'href': href, 'xmlns': NS_ATOM}));
 	
@@ -415,7 +430,7 @@ function itemLoader() {
 		loadmore.hide();
 		
 		// Get the data
-		if($('#content .wrapper.channel').size())
+		if($('#content .wrapper.channel').size()) {
 			$.get('/' + user_val + '/channel/' + start_val, function(data) {
 				// No data?
 				if(!data) {
@@ -431,8 +446,7 @@ function itemLoader() {
 				loader.addClass('hidden');
 				loadmore.show();
 			});
-		
-		else if($('#content .wrapper.pictures').size())
+		} else if($('#content .wrapper.pictures').size()) {
 			$.get('/' + user_val + '/pictures/' + start_val, function(data) {
 				// No data?
 				if(!data) {
@@ -463,14 +477,14 @@ function itemLoader() {
 					$(second_html).find('.tabulate:first').remove();
 					second_html = $(second_html).html();
 					$('#content .wrapper.pictures .tabulate:last').after(second_html);
-				}
-				
-				else
+				} else {
 					$('#content .wrapper.pictures .tabulate:last').after(data);
+				}
 				
 				loader.addClass('hidden');
 				loadmore.show();
 			});
+		}
 	}
 	
 	return false;
@@ -478,8 +492,9 @@ function itemLoader() {
 
 // Social channel navigation
 $(window).scroll(function() {
-	if($('#content .wrapper .loading').size() && $(window).scrollTop() >= ($(document).height() - $(window).height() - 400))
+	if($('#content .wrapper .loading').size() && $(window).scrollTop() >= ($(document).height() - $(window).height() - 400)) {
 		itemLoader();
+	}
 });
 
 // XMPP session saver
@@ -487,34 +502,41 @@ $(window).bind('beforeunload', saveSession);
 
 // Picture gallery navigation
 $(document).keyup(function(e) {
-	if(!$('#content .wrapper a.navigation').size())
+	if(!$('#content .wrapper a.navigation').size()) {
 		return;
+	}
 	
 	var nav_href = '';
 	var nav_path = '';
 	
-	if($('#content .wrapper.channel').size())
+	if($('#content .wrapper.channel').size()) {
 		nav_path = 'channel';
-	else if($('#content .wrapper.pictures').size())
+	} else if($('#content .wrapper.pictures').size()) {
 		nav_path = 'pictures';
+	}
 	
-	if(!nav_path)
+	if(!nav_path) {
 		return;
+	}
 	
 	// Next item?
-	if(e.keyCode == 37)
+	if(e.keyCode == 37) {
 		nav_href = $('#content .wrapper.' + nav_path + ' a.navigation.next').click().focus().attr('href');
+	}
 	
 	// Previous item?
-	if(e.keyCode == 39)
+	if(e.keyCode == 39) {
 		nav_href = $('#content .wrapper.' + nav_path + ' a.navigation.previous').click().focus().attr('href');
+	}
 	
 	// Change the page?
-	if(nav_href)
+	if(nav_href) {
 		window.location = nav_href;
+	}
 	
-	if((e.keyCode == 37) || (e.keyCode == 39))
+	if((e.keyCode == 37) || (e.keyCode == 39)) {
 		return false;
+	}
 });
 
 $(document).ready(function() {
@@ -527,12 +549,14 @@ $(document).ready(function() {
 	// Comments load
 	$('#content .wrapper .comments .comments-load').click(initComments);
 	$('#content .wrapper .comments .comments-form input, #content .wrapper .comments .comments-form textarea').focus(function() {
-		if($('#content .wrapper .comments .comments-load').size())
+		if($('#content .wrapper .comments .comments-load').size()) {
 			initComments();
+		}
 	});
 	
-	if($('#content .wrapper .comments .comments-load').size())
+	if($('#content .wrapper .comments .comments-load').size()) {
 		initComments();
+	}
 	
 	// Comments send
 	$('#content .wrapper .comments .comments-form').submit(sendComment);

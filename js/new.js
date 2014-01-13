@@ -58,29 +58,13 @@ function submitBot() {
 		$('#content .step').eq(2).find('button').attr('disabled', true);
 		$('#content .step').eq(next_step).removeClass('disabled');
 
-		if(next_step == 3)
+		if(next_step == 3) {
 			$('#content .step').eq(next_step).find('button').removeAttr('disabled')
+		}
 		
 		// Redirect
 		window.location.hash = 'step4';
 	});
-}
-
-// Checks if a value exists in an array
-function existArrayValue(array, value) {
-	try {
-		// Loop in the array
-		for(i in array) {
-			if(array[i] == value)
-				return true;
-		}
-		
-		return false;
-	}
-	
-	catch(e) {
-		return false;
-	}
 }
 
 // Converts a JS array to a serialized PHP one
@@ -89,7 +73,7 @@ function jsArrayToPHP(a) {
 	var total = 0;
 	
 	for(var key in a)  {
-		++ total;
+		++total;
 		
 		a_php = a_php + 's:' + String(key).length + ':"' + String(key) + '";s:' + String(a[key]).length + ':"' + String(a[key]) + '";';
     }
@@ -118,8 +102,9 @@ function handleInviteFriends(iq) {
 	$(iq.getQuery()).find('item').each(function() {
 		var current_user = $(this).attr('jid');
 		
-		if(current_user.match(/@/) && !current_user.match(/%/) && !current_user.match(/\\40/) && !existArrayValue(users, current_user))
+		if(current_user.match(/@/) && !current_user.match(/%/) && !current_user.match(/\\40/) && !Utils.existArrayValue(users, current_user)) {
 			users.push(current_user);
+		}
 	});
 	
 	inviteFriends('invite', users);
@@ -145,10 +130,11 @@ function sendInviteFriends(users) {
 	// Job done!
 	var invite_result = 'All done.';
 	
-	if(users.length == 1)
+	if(users.length == 1) {
 		invite_result = '1 friend invited.';
-	else if(users.length > 1)
+	} else if(users.length > 1) {
 		invite_result = users.length + ' friends invited.';
+	}
 	
 	$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(invite_result);
 	
@@ -189,14 +175,15 @@ function inviteFriends(mode, users) {
 	// Send the bot a request
 	$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Sending invite messages…').show();
 	
-	$.post('/new/invite', {list: jsArrayToPHP(users)}, function(data) {
+	$.post('/new/invite', { list: jsArrayToPHP(users) }, function(data) {
 		var to_invite = [];
 		
 		$(data).find('user').each(function() {
 			var current_push = $(this).text();
 			
-			if(current_push && !existArrayValue(to_invite, current_push))
+			if(current_push && !Utils.existArrayValue(to_invite, current_push)) {
 				to_invite.push(current_push);
+			}
 		});
 		
 		// Send messages
@@ -213,13 +200,15 @@ $(document).ready(function() {
 	
 	// Disabled click event
 	$('*').click(function() {
-		if($(this).parent().hasClass('disabled'))
+		if($(this).parent().hasClass('disabled')) {
 			return false;
+		}
 	});
 	
 	// Form event
 	$('#content .step .stepped input.read').click(function() {
 		$(this).attr('disabled', true);
+
 		$('#content .step').eq(0).addClass('disabled');
 		$('#content .step').eq(1).removeClass('disabled');
 		$('#content .step').eq(1).find('input').removeAttr('disabled');
@@ -233,19 +222,18 @@ $(document).ready(function() {
 		var address = $(this).find('input.[name=address]').val();
 		var password = $(this).find('input.[name=password]').val();
 		
-		if(!address || !password)
+		if(!address || !password) {
 			return false;
+		}
 		
 		var username, domain;
 		
-		// A domain is specified
 		if(address.indexOf('@') != -1) {
-			username = getXIDNick(address);
-			domain = getXIDHost(address);
-		}
-		
-		// Quick address input
-		else {
+			// A domain is specified
+			username = Common.getXIDNick(address);
+			domain = Common.getXIDHost(address);
+		} else {
+			// Quick address input
 			username = address;
 			domain = 'jappix.com';
 		}
@@ -318,8 +306,9 @@ $(document).ready(function() {
 	});
 	
 	$('#content .step .stepped .skip a').click(function() {
-		if($(this).parent().parent().parent().hasClass('disabled'))
+		if($(this).parent().parent().parent().hasClass('disabled')) {
 			return false;
+		}
 		
 		return inviteFriends('skip');
 	});

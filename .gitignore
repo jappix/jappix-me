@@ -4,3 +4,4 @@
 config.xml
 cache/
 pending/
+test/node_modules/

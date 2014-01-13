@@ -35,8 +35,9 @@ function handleConnected() {
 	$('#content .step').eq(2).removeClass('disabled');
 	$('#content .step').eq(2).find('button').removeAttr('disabled');
 	
-	if($('#content .step').eq(1).find('.saveit').is(':hidden'))
+	if($('#content .step').eq(1).find('.saveit').is(':hidden')) {
 		$('#content .step').eq(1).find('.saveit').fadeIn('slow');
+	}
 	
 	window.location.hash = 'step2';
 }
@@ -62,7 +63,17 @@ function submitBot() {
 	var d_update = $('#content .step .stepped input[name=update]').is(':checked') ? '1' : '0';
 	var d_remove = $('#content .step .stepped input[name=remove]').is(':checked') ? '1' : '0';
 
-	$.post('/privacy/bot', {usr: USER_USERNAME, srv: USER_DOMAIN, pwd: USER_PASSWORD, search: d_search, flagged: d_flagged, microblog: d_microblog, geoloc: d_geoloc, update: d_update, remove: d_remove}, function(data) {
+	$.post('/privacy/bot', {
+		usr: USER_USERNAME,
+		srv: USER_DOMAIN,
+		pwd: USER_PASSWORD,
+		search: d_search,
+		flagged: d_flagged,
+		microblog: d_microblog,
+		geoloc: d_geoloc,
+		update: d_update,
+		remove: d_remove
+	}, function(data) {
 		// Any error?
 		if(data != 'OK') {
 			$('#content .step:not(.disabled) .stepped .status').removeClass('network').text(data);
@@ -93,8 +104,9 @@ $(document).ready(function() {
 	
 	// Disabled click event
 	$('*').click(function() {
-		if($(this).parent().hasClass('disabled'))
+		if($(this).parent().hasClass('disabled')) {
 			return false;
+		}
 	});
 	
 	// Form event
@@ -103,19 +115,18 @@ $(document).ready(function() {
 		var address = $(this).find('input.[name=address]').val();
 		var password = $(this).find('input.[name=password]').val();
 		
-		if(!address || !password)
+		if(!address || !password) {
 			return false;
+		}
 		
 		var username, domain;
 		
-		// A domain is specified
 		if(address.indexOf('@') != -1) {
-			username = getXIDNick(address);
-			domain = getXIDHost(address);
-		}
-		
-		// Quick address input
-		else {
+			// A domain is specified
+			username = Common.getXIDNick(address);
+			domain = Common.getXIDHost(address);
+		} else {
+			// Quick address input
 			username = address;
 			domain = 'jappix.com';
 		}
