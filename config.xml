@@ -37,7 +37,7 @@
 		<bosh>/bosh</bosh>
 
 		<!-- websocket relative path (proxy) -->
-		<bosh>/websocket</bosh>
+		<websocket>/websocket</websocket>
 	</xmpp>
 
 	<!--
