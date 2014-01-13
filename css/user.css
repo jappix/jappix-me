@@ -254,8 +254,9 @@ abbr {
 	float: left;
 	-webkit-transform: rotate(352deg);
 	-moz-transform: rotate(352deg);
-	-o-transform:rotate(352deg);
-	-ms-transform:rotate(352deg);
+	-o-transform: rotate(352deg);
+	-ms-transform: rotate(352deg);
+	transform: rotate(352deg);
 	rotation: 352deg;
 	-moz-box-shadow: 0 0 15px #0b0b0b;
 	-webkit-box-shadow: 0 0 15px #0b0b0b;
@@ -265,8 +266,9 @@ abbr {
 #quicklook .avatarize:hover {
 	-webkit-transform: rotate(345deg);
 	-moz-transform: rotate(345deg);
-	-o-transform:rotate(345deg);
-	-ms-transform:rotate(345deg);
+	-o-transform: rotate(345deg);
+	-ms-transform: rotate(345deg);
+	transform: rotate(345deg);
 	rotation: 345deg;
 	-moz-box-shadow: 0 0 30px black;
 	-webkit-box-shadow: 0 0 30px black;
@@ -613,8 +615,9 @@ abbr {
 	opacity: 1;
 	-webkit-transform: rotate(355deg);
 	-moz-transform: rotate(355deg);
-	-o-transform:rotate(355deg);
-	-ms-transform:rotate(355deg);
+	-o-transform: rotate(355deg);
+	-ms-transform: rotate(355deg);
+	transform: rotate(355deg);
 	rotation: 355deg;
 	-moz-box-shadow: 0 0 15px #a2a2a2;
 	-webkit-box-shadow: 0 0 15px #a2a2a2;
@@ -631,8 +634,9 @@ abbr {
 #content .wrapper.pictures a.next:focus img {
 	-webkit-transform: rotate(5deg);
 	-moz-transform: rotate(5deg);
-	-o-transform:rotate(5deg);
-	-ms-transform:rotate(5deg);
+	-o-transform: rotate(5deg);
+	-ms-transform: rotate(5deg);
+	transform: rotate(5deg);
 	rotation: 5deg;
 }
 
@@ -764,9 +768,9 @@ abbr {
 
 #content .wrapper .comments .comments-info,
 #content .wrapper .comments .comments-form {
-	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 }
 
 #content .wrapper .comments .comments-info {

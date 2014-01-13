@@ -59,7 +59,7 @@ function submitBot() {
 		$('#content .step').eq(next_step).removeClass('disabled');
 
 		if(next_step == 3) {
-			$('#content .step').eq(next_step).find('button').removeAttr('disabled')
+			$('#content .step').eq(next_step).find('button').removeAttr('disabled');
 		}
 		
 		// Redirect
@@ -115,7 +115,7 @@ function sendInviteFriends(users) {
 	var app_url = $('#config input[name="app-url"]').val();
 
 	if(users && users.length) {
-		for(i in users) {
+		for(var i in users) {
 			var mess = new JSJaCMessage();
 			
 			mess.setTo(users[i]);
@@ -278,12 +278,12 @@ $(document).ready(function() {
 			con.registerHandler('onerror', handleError);
 			
 			con.connect({
-				username = username,
-				domain = domain,
-				resource = 'Jappix Me (WB' + (new Date()).getTime() + ')',
-				pass = password,
-				secure = true,
-				xmllang = 'en'
+				username: username,
+				domain: domain,
+				resource: 'Jappix Me (WB' + (new Date()).getTime() + ')',
+				pass: password,
+				secure: true,
+				xmllang: 'en'
 			});
 
 			// Waiter

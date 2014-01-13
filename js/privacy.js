@@ -171,12 +171,12 @@ $(document).ready(function() {
 			con.registerHandler('onerror', handleError);
 			
 			con.connect({
-				username = username,
-				domain = domain,
-				resource = 'Jappix Me (WB' + (new Date()).getTime() + ')',
-				pass = password,
-				secure = true,
-				xmllang = 'en'
+				username: username,
+				domain: domain,
+				resource: 'Jappix Me (WB' + (new Date()).getTime() + ')',
+				pass: password,
+				secure: true,
+				xmllang: 'en'
 			});
 
 			// Waiter

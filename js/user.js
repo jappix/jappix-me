@@ -74,11 +74,11 @@ function initComments() {
 	// Must connect!
 	if(((DateUtils.getTimeStamp() - stamp) >= JSJACHBC_MAX_WAIT) || !con.resume()) {
 		con.connect({
-			domain = $('#config input[name="xmpp-domain"]').val(),
-			authtype = 'saslanon',
-			resource = 'Jappix Me (WB' + (new Date()).getTime() + ')',
-			secure = true,
-			xmllang = 'en'
+			domain: $('#config input[name="xmpp-domain"]').val(),
+			authtype: 'saslanon',
+			resource: 'Jappix Me (WB' + (new Date()).getTime() + ')',
+			secure: true,
+			xmllang: 'en'
 		});
 	}
 	
@@ -301,7 +301,7 @@ function sendComment() {
 			var parent_select = $('#content .wrapper .comments');
 			var parent_data = [parent_select.attr('data-owner'), NS_URN_MBLOG, parent_select.attr('data-post')];
 			
-			for(n in followers) {
+			for(var n in followers) {
 				sendNotification(followers[n], 'unknown@' + anon_domain, name, 'comment', item_href, value, parent_data);
 			}
 		}
@@ -387,8 +387,8 @@ function formatText(text) {
 	text = text.htmlEnc();
 	
 	// Text style
-	text = text.replace(/(^|\s|>|\()((\*)([^<>'"\*]+)(\*))($|\s|<|\))/gi, '$1<b>$4</b>$6')
-	text = text.replace(/(^|\s|>|\()((\/)([^<>'"\/]+)(\/))($|\s|<|\))/gi, '$1<em>$4</em>$6')
+	text = text.replace(/(^|\s|>|\()((\*)([^<>'"\*]+)(\*))($|\s|<|\))/gi, '$1<b>$4</b>$6');
+	text = text.replace(/(^|\s|>|\()((\/)([^<>'"\/]+)(\/))($|\s|<|\))/gi, '$1<em>$4</em>$6');
 	text = text.replace(/(^|\s|>|\()((_)([^<>'"_]+)(_))($|\s|<|\))/gi, '$1<span style="text-decoration: underline;">$4</span>$6');
 	
 	// Apply links
@@ -402,7 +402,7 @@ function formatText(text) {
 function existArrayValue(array, value) {
 	try {
 		// Loop in the array
-		for(i in array) {
+		for(var i in array) {
 			if(array[i] == value)
 				return true;
 		}
