@@ -51,11 +51,18 @@ function initComments() {
 	
 	// Can resume?
 	var stamp = parseInt(getDB('jappix-me', 'stamp'));
+	var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
+	var config_xmpp_websocket = $('#config input[name="xmpp-websocket"]').val();
 	
-	oArgs = new Object();
-	oArgs.httpbase = $('#config input[name="xmpp-bosh"]').val();
-	
-	con = new JSJaCHttpBindingConnection(oArgs);
+	if(JappixCommon.hasWebSocket()) {
+		con = new JSJaCWebSocketConnection({
+			httpbase: config_xmpp_websocket
+		});
+	} else {
+		con = new JSJaCHttpBindingConnection({
+			httpbase: config_xmpp_bosh
+		});
+	}
 	
 	con.registerHandler('onconnect', handleConnected);
 	con.registerHandler('onresume', handleConnected);
@@ -64,13 +71,13 @@ function initComments() {
 	
 	// Must connect!
 	if(((getTimeStamp() - stamp) >= JSJACHBC_MAX_WAIT) || !con.resume()) {
-		oArgs.domain = $('#config input[name="xmpp-domain"]').val();
-		oArgs.authtype = 'saslanon';
-		oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
-		oArgs.secure = true;
-		oArgs.xmllang = 'en';
-		
-		con.connect(oArgs);
+		con.connect({
+			domain = $('#config input[name="xmpp-domain"]').val(),
+			authtype = 'saslanon',
+			resource = 'Jappix Me (WB' + (new Date()).getTime() + ')',
+			secure = true,
+			xmllang = 'en'
+		});
 	}
 	
 	return false;

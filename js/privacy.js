@@ -126,6 +126,7 @@ $(document).ready(function() {
 		// Read config
 		var config_bot_domain = $('#config input[name="bot-domain"]').val();
 		var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
+		var config_xmpp_websocket = $('#config input[name="xmpp-websocket"]').val();
 
 		// Not allowed?
 		if((domain == 'gmail.com') || (domain == 'googlemail.com') || (domain == 'chat.facebook.com')) {
@@ -144,23 +145,28 @@ $(document).ready(function() {
 
 		// Can check credentials? (domain allowed by BOSH)
 		if(domain == config_bot_domain) {
-			// Store credentials
-			oArgs = new Object();
-			oArgs.httpbase = config_xmpp_bosh;
-			oArgs.username = username;
-			oArgs.domain = domain;
-			oArgs.resource = 'Jappix Me (WB' + (new Date()).getTime() + ')';
-			oArgs.pass = password;
-			oArgs.secure = true;
-			oArgs.xmllang = 'en';
-
 			// Connect!
-			con = new JSJaCHttpBindingConnection(oArgs);
+			if(JappixCommon.hasWebSocket()) {
+				con = new JSJaCWebSocketConnection({
+					httpbase: config_xmpp_websocket
+				});
+			} else {
+				con = new JSJaCHttpBindingConnection({
+					httpbase: config_xmpp_bosh
+				});
+			}
 
 			con.registerHandler('onconnect', handleConnected);
 			con.registerHandler('onerror', handleError);
 			
-			con.connect(oArgs);
+			con.connect({
+				username = username,
+				domain = domain,
+				resource = 'Jappix Me (WB' + (new Date()).getTime() + ')',
+				pass = password,
+				secure = true,
+				xmllang = 'en'
+			});
 
 			// Waiter
 			$('#content .step:not(.disabled) .stepped .status').addClass('network').text('Connecting…').show();

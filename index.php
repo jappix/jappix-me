@@ -448,6 +448,7 @@ if($page == '404') {
 		<input type="hidden" name="bot-domain" value="<?php echo getConfig('bot', 'domain'); ?>" />
 		<input type="hidden" name="xmpp-domain" value="<?php echo getConfig('xmpp', 'domain'); ?>" />
 		<input type="hidden" name="xmpp-bosh" value="<?php echo getConfig('xmpp', 'bosh'); ?>" />
+		<input type="hidden" name="xmpp-websocket" value="<?php echo getConfig('xmpp', 'websocket'); ?>" />
 		<input type="hidden" name="app-url" value="<?php echo $path_root_protocol.'://'.$path_root_domain.'/'; ?>" />
 	</div>
 	<!-- END CONFIG -->
