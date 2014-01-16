@@ -54,17 +54,12 @@ function initComments() {
 	// Can resume?
 	var stamp = parseInt(DataStore.getDB('me', 'jappix-me', 'stamp'));
 	var config_xmpp_bosh = $('#config input[name="xmpp-bosh"]').val();
-	var config_xmpp_websocket = $('#config input[name="xmpp-websocket"]').val();
 	
-	if(config_xmpp_websocket && typeof window.WebSocket !== undefined) {
-		con = new JSJaCWebSocketConnection({
-			httpbase: config_xmpp_websocket
-		});
-	} else {
-		con = new JSJaCHttpBindingConnection({
-			httpbase: config_xmpp_bosh
-		});
-	}
+	// Note: cannot use WebSocket there...
+	// We want to use the session resuming feature which makes everything faster
+	con = new JSJaCHttpBindingConnection({
+		httpbase: config_xmpp_bosh
+	});
 	
 	con.registerHandler('onconnect', handleConnected);
 	con.registerHandler('onresume', handleConnected);
