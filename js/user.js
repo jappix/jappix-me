@@ -31,7 +31,7 @@ function handleDisconnected() {
 
 // XMPP session save
 function saveSession() {
-	if(!isConnected()) {
+	if(!Common.isConnected()) {
 		return;
 	}
 	
