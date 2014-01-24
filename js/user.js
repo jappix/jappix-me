@@ -100,17 +100,15 @@ function handleComments(iq) {
 	if(iq.getType() == 'error') {
 		$('#content .wrapper .comments .comments-content').html('<span class="comments-nothing">Error. Broken comments!</span>');
 		$('#content .wrapper .comments .comments-form input.submit').attr('disabled', true);
-		alert('err')
+		
 		return;
 	}
-
-	alert('handleComments')
 	
 	var app_url = $('#config input[name="app-url"]').val();
 	var anon_domain = $('#config input[name="xmpp-domain"]').val();
 	var path = '#content .wrapper .comments .comments-content';
 	var data = iq.getNode();
-	var server = Common.bareXID(getStanzaFrom(iq));
+	var server = Common.bareXID(Common.getStanzaFrom(iq));
 	var code = '';
 	
 	// Append the comments
