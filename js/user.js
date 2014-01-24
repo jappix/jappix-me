@@ -103,14 +103,14 @@ function handleComments(iq) {
 		
 		return;
 	}
-	console.debug('0')
+	
 	var app_url = $('#config input[name="app-url"]').val();
 	var anon_domain = $('#config input[name="xmpp-domain"]').val();
 	var path = '#content .wrapper .comments .comments-content';
 	var data = iq.getNode();
 	var server = Common.bareXID(Common.getStanzaFrom(iq));
 	var code = '';
-	console.debug(1)
+	
 	// Append the comments
 	$(data).find('item').each(function() {
 		// Get comment
@@ -121,7 +121,7 @@ function handleComments(iq) {
 		var current_bname = current_xid;
 		
 		if(current_date) {
-			current_date = Common.explodeThis(' - ', relativeDate(current_date), 0);
+			current_date = Common.explodeThis(' - ', DateUtils.relativeDate(current_date), 0);
 		} else {
 			current_date = '';
 		}
@@ -177,13 +177,13 @@ function handleComments(iq) {
 					'</div>' + code;
 		}
 	});
-	console.debug(2)
+	
 	if(code) {
 		$(path).html(code);
 	} else {
 		$('#content .wrapper .comments .comments-loading').replaceWith('<span class="comments-nothing">No comments... Yet!</span>');
 	}
-	console.debug(3)
+	
 	$('#content .wrapper .comments .comments-form input.submit').removeAttr('disabled');
 }
 
