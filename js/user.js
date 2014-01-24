@@ -119,13 +119,13 @@ function handleComments(iq) {
 		var current_date = $(this).find('published').text();
 		var current_body = $(this).find('content[type=text]').text();
 		var current_bname = current_xid;
-		console.debug(1)
+		
 		if(current_date) {
-			current_date = Common.explodeThis(' - ', DateUtils.relativeDate(current_date), 0);
+			current_date = Common.explodeThis(' - ', DateUtils.relative(current_date), 0);
 		} else {
 			current_date = '';
 		}
-		console.debug(2)
+		
 		if(!current_body) {
 			current_body = $(this).find('title:not(source > title)').text();
 		}
@@ -137,13 +137,13 @@ function handleComments(iq) {
 		if(!current_name && current_xid && current_xid.match('@') && (Common.getXIDHost(current_xid) != anon_domain)) {
 			current_name = Common.getXIDNick(current_xid);
 		}
-		console.debug(3)
+		
 		if(!current_name) {
 			current_name = '<em>Anonymous</em>';
 		} else {
 			current_name.htmlEnc();
 		}
-		console.debug(4)
+		
 		var current_profile = app_url + 'unknown@' + anon_domain;
 		var current_real = false;
 		
@@ -151,7 +151,7 @@ function handleComments(iq) {
 			current_profile = app_url + current_xid.htmlEnc();
 			current_real = true;
 		}
-		console.debug(5)
+		
 		var current_avatarlink = '';
 		var current_namelink = '';
 		
@@ -162,7 +162,7 @@ function handleComments(iq) {
 			current_avatarlink = '<img class="avatar" src="' + current_profile + '/avatar/32.png" alt="" />';
 			current_namelink = '<span class="name">' + current_name + '</span>';
 		}
-		console.debug(6)
+		
 		if(current_body) {
 			code = '<div class="tabulate" data-author="' + Common.encodeQuotes(current_xid) + '">' + 
 						current_avatarlink + 
@@ -176,7 +176,6 @@ function handleComments(iq) {
 						'<div class="clear"></div>' + 
 					'</div>' + code;
 		}
-		console.debug(7)
 	});
 	
 	if(code) {
