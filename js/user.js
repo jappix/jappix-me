@@ -9,7 +9,6 @@
 
 // XMPP connected handler
 function handleConnected() {
-	alert('connecting')
 	var param_server = $('#content .wrapper .comments').attr('data-server');
 	var param_node = $('#content .wrapper .comments').attr('data-node');
 	
@@ -101,9 +100,11 @@ function handleComments(iq) {
 	if(iq.getType() == 'error') {
 		$('#content .wrapper .comments .comments-content').html('<span class="comments-nothing">Error. Broken comments!</span>');
 		$('#content .wrapper .comments .comments-form input.submit').attr('disabled', true);
-		
+		alert('err')
 		return;
 	}
+
+	alert('handleComments')
 	
 	var app_url = $('#config input[name="app-url"]').val();
 	var anon_domain = $('#config input[name="xmpp-domain"]').val();
