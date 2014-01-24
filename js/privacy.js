@@ -157,7 +157,7 @@ $(document).ready(function() {
 		// Can check credentials? (domain allowed by BOSH)
 		if(domain == config_bot_domain) {
 			// Connect!
-			if(config_xmpp_websocket && typeof window.WebSocket !== undefined) {
+			if(config_xmpp_websocket && typeof window.WebSocket != 'undefined') {
 				con = new JSJaCWebSocketConnection({
 					httpbase: config_xmpp_websocket
 				});
