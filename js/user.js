@@ -9,6 +9,7 @@
 
 // XMPP connected handler
 function handleConnected() {
+	alert('connecting')
 	var param_server = $('#content .wrapper .comments').attr('data-server');
 	var param_node = $('#content .wrapper .comments').attr('data-node');
 	
