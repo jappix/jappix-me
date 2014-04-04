@@ -31,7 +31,7 @@ Links
 -----
 
 * Jappix Me official service: https://me.jappix.com/
-* Jappix official support: http://jappix.pro/
+* Jappix official support: https://jappix.pro/
 
 
 Mirrors
