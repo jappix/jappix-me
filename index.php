@@ -3,7 +3,7 @@
 /*
  * Jappix Me - Your public profile, anywhere
  * Routing service
- * 
+ *
  * License: AGPL
  * Author: Valérian Saliou
  */
@@ -52,7 +52,7 @@ if(file_exists('.'.$url))
 if($url != $init_url) {
 	header('Status: 301 Moved Permanently', false, 301);
 	header('Location: '.$url);
-	
+
 	exit;
 }
 
@@ -81,52 +81,52 @@ if($user) {
 									'srv'  => trim(strtolower($_POST['srv'])),
 									'pwd'  => trim($_POST['pwd'])
 								   );
-				
+
 				$store_user = $data_store['usr'].'@'.$data_store['srv'];
-				
+
 				// Pending profile
 				if(file_exists('./pending/'.$store_user))
 					exit('Profile request already sent!');
-				
+
 				// Full profile
 				if(file_exists('./cache/'.$store_user))
 					exit('Profile already exists!');
-				
+
 				file_put_contents('./pending/'.$store_user, serialize($data_store));
-				
+
 				exit('OK');
 			}
-			
+
 			else
 				exit('Invalid query!');
 		}
-		
+
 		else if($setting == 'invite') {
 			$xml_users = '<jappix xmlns="jappix:me:invite">';
-			
+
 			if(isset($_POST['list'])) {
 				$list_users = unserialize($_POST['list']);
-				
+
 				foreach($list_users as $c_list_users) {
 					$c_list_users = strtolower($c_list_users);
 					$c_file_users = './invite/'.$c_list_users;
-					
+
 					if(!file_exists($c_file_users)) {
 						$xml_users .= '<user>'.htmlspecialchars($c_list_users).'</user>';
 						file_put_contents($c_file_users, '');
 					}
 				}
 			}
-			
+
 			$xml_users .= '</jappix>';
-			
+
 			exit($xml_users);
 		}
-		
+
 		$page = 'new';
 		$title = 'Create your profile - Jappix Me';
 	}
-	
+
 	// Privacy settings?
 	else if($user == 'privacy') {
 		// Bot query?
@@ -145,55 +145,55 @@ if($user) {
 									'update' => trim($_POST['update']),
 									'remove' => trim($_POST['remove'])
 								   );
-				
+
 				$store_user = $data_store['usr'].'@'.$data_store['srv'];
-				
+
 				// Any error?
 				if(!file_exists('./cache/'.$store_user))
 					exit('Profile does not exist!');
 				if(file_exists('./pending/'.$store_user))
 					exit('Changes already pending!');
-				
+
 				file_put_contents('./pending/'.$store_user, serialize($data_store));
-				
+
 				exit('OK');
 			}
-			
+
 			else
 				exit('Invalid query!');
-			
+
 			exit;
 		}
-		
+
 		$page = 'privacy';
 		$title = 'Manage your privacy settings - Jappix Me';
 	}
-	
+
 	else if(($user == 'ads') || ($user == 'cache') || ($user == 'invite') || ($user == 'pending') || ($user == 'py')) {
 		$page = '404';
 		$reason_404 = 'locked';
 	}
-	
+
 	// Valid XMPP address?
 	else if(isAddress($user)) {
 		// Sub-setting to be used
 		$subsetting = substr(strstr($setting, '/'), 1);
-		
+
 		// Sub-page to be displayed
 		$subpage = preg_replace('/^([^\/]+)([\/]+)?(.+)?$/', '$1', $setting);
-		
+
 		if(!$subpage)
 			$subpage = 'channel';
-		
+
 		// Profile availability
 		global $exists_user, $exists_profile, $exists_vcard, $exists_microblog, $exists_geoloc;
-		
+
 		$exists_user = file_exists('./cache/'.$user);
 		$exists_profile = file_exists('./cache/'.$user.'/profile');
 		$exists_vcard = file_exists('./cache/'.$user.'/raw/vcard');
 		$exists_microblog = file_exists('./cache/'.$user.'/raw/microblog');
 		$exists_geoloc = file_exists('./cache/'.$user.'/raw/geoloc');
-		
+
 		// Get the user's XMPP data
 		$user_data = getXMPPData($user);
 		$user_vcard = $user_data['vcard'];
@@ -203,82 +203,82 @@ if($user) {
 		$user_pictures = $user_data['pictures'];
 		$user_flagged = $user_data['flagged'];
 		$user_search = $user_data['search'];
-		
+
 		// User avatar requested?
 		if($subpage == 'avatar') {
 			include('./php/avatar.php');
 			exit;
 		}
-		
+
 		// If user does not exist, abort
 		if(!$exists_user || (!$exists_profile && !$exists_vcard && !$exists_microblog && !$exists_geoloc)) {
 			$page = '404';
-			
+
 			// Profile being created?
 			if(file_exists('./pending/'.$user) || $exists_user)
 				$reason_404 = 'pending';
 			else
 				$reason_404 = 'user';
 		}
-		
+
 		else {
 			// User feed requested?
 			if($subpage == 'feed') {
 				include('./php/feed.php');
 				exit;
 			}
-			
+
 			// User export item requested?
 			if(($subpage == 'export') && $subsetting && preg_match('/^(location|profile)((\/+)(.+)?)?$/', $subsetting)) {
 				include('./php/user.export.php');
 				exit;
 			}
-			
+
 			// User channel requested?
 			if(($subpage == 'channel') && $subsetting && preg_match('/^[0-9]+$/', $subsetting)) {
 				$channel_start = intval($subsetting) * 10;
 				$channel_stop = $channel_start + 10;
 				$channel_start++;
-				
+
 				genChannel($user, $user_microblog, $channel_start, $channel_stop);
-				
+
 				exit;
 			}
-			
+
 			// User pictures requested?
 			if(($subpage == 'pictures') && preg_match('/^[0-9]+$/', $subsetting)) {
 				$pictures_start = intval($subsetting) * 60;
 				$pictures_stop = $pictures_start + 60;
 				$pictures_start++;
-				
+
 				genPictures($user, $user_pictures, $pictures_start, $pictures_stop);
-				
+
 				exit;
 			}
-			
+
 			$page = 'user';
 			$title = $user.' - Jappix Me';
-			
+
 			// Redirect if we don't know that page (or if channel page asked)
 			if(!file_exists('./php/user.'.$subpage.'.php') || ($url == '/'.$user.'/channel')) {
 				header('Status: 301 Moved Permanently', false, 301);
 				header('Location: /'.$user);
-				
+
 				exit;
 			}
-			
+
 			// Non-existent channel entry
 			if(($subpage == 'channel') && $subsetting && !isset($user_microblog[$subsetting])) {
 				$page = '404';
 				$reason_404 = 'channel';
 			}
-			
+
 			// Non-existent picture
 			else if(($subpage == 'pictures') && $subsetting && !isset($user_pictures[$subsetting])) {
 				$page = '404';
 				$reason_404 = 'pix';
 			}
-			
+
 			// Profile is okay
 			else {
 				// Global user information
@@ -288,52 +288,52 @@ if($user) {
 				$user_age = getUserAge($user_bday_stamp);
 				$user_location = getUserLocation($user, $user_vcard);
 				$user_site = getUserSite($user_vcard);
-				
+
 				// Sub-page title
 				if($subpage == 'channel') {
 					if($subsetting) {
 						$ent_content = '';
-						
+
 						if(isset($user_microblog[$subsetting]['item'])) {
 							$ent_item = $user_microblog[$subsetting]['item'][0]['sub'];
-							
+
 							if(isset($ent_item['entry'])) {
 								$ent_entry = $ent_item['entry'][0]['sub'];
-								
+
 								if(isset($ent_entry['body']))
 									$ent_content = trim($ent_entry['body'][0]['sub']);
 								if(isset($ent_entry['content']))
 									$ent_content = trim($ent_entry['content'][0]['sub']);
 							}
 						}
-						
+
 						if(!$ent_content)
 							$ent_content = 'unknown content';
-						
+
 						$ent_title = truncate($ent_content, 50, '…');
-						
+
 						$title = htmlspecialchars($user_fn).' ('.htmlspecialchars($ent_title).') - Jappix Me';
 					}
-					
+
 					else
 						$title = htmlspecialchars($user_fn).' - Jappix Me';
 				}
-				
+
 				else if(($subpage == 'pictures') && $subsetting) {
 					$pix_name = $user_pictures[$subsetting]['title'];
-					
+
 					if(!$pix_name)
 						$pix_name = 'unknown name';
-					
+
 					$title = htmlspecialchars($user_fn).' ('.ucfirst($subpage).', '.htmlspecialchars(ucfirst($pix_name)).') - Jappix Me';
 				}
-				
+
 				else
 					$title = htmlspecialchars($user_fn).' ('.ucfirst($subpage).') - Jappix Me';
 			}
 		}
 	}
-	
+
 	// Error!
 	else {
 		$page = '404';
@@ -355,7 +355,7 @@ if($page == '404') {
 		$title = 'Please wait (a little bit) - Jappix Me';
 	else
 		$title = 'That\'s an error - Jappix Me';
-	
+
 	header('Status: 404 Not Found', false, 404);
 }
 
@@ -386,7 +386,7 @@ if($page == '404') {
 		<span class="flag">
 			<span class="wrapped">This profile has been reported to be <b>inappropriate for children</b>. It may contain <b>shocking or adult-only</b> files<noscript> / <b>JavaScript is disabled</b></noscript>.</span>
 		</span>
-		
+
 		<span class="marginizer">Flagged margin, hidden ;-)</span>
 	</div>
 	<?php } else if(($page == 'home') || ($page == 'user') || ($page == 'new') || ($page == 'privacy')) { ?>
@@ -395,35 +395,35 @@ if($page == '404') {
 		<span class="noscript">
 			<span class="wrapped">Woops! It seems <b>your browser cannot handle our beautiful JavaScript</b>. Jappix Me requires it to work correctly, you'd better <b>enable it</b>.</span>
 		</span>
-		
+
 		<span class="marginizer">No script margin, hidden ;-)</span>
 	</noscript>
 	<?php } ?>
-	
+
 	<?php include('./php/'.$page.'.php'); ?>
-	
+
 	<?php if(($page == 'home') || ($page == 'user') || ($page == 'new') || ($page == 'privacy')) { ?>
 	<div id="foot" class="wrapped">
-		<span><b><a href="https://project.jappix.com/contact">Contact</a></b> - <b><a href="https://legal.jappix.com/">Legal</a></b> - © 2011-<?php echo(date('Y')); ?> <a href="https://frenchtouch.pro/">FrenchTouch Web Agency</a></span>
+		<span><b><a href="https://project.jappix.com/contact">Contact</a></b> - <b><a href="https://legal.jappix.com/">Legal</a></b> - © 2011-<?php echo(date('Y')); ?> <a href="https://hakuma.holdings/">Hakuma Holdings</a></span>
 		<?php if($page == 'user') {
 			$google_link = 'https://www.google.com/search?q='.rawurlencode('site:'.$path_root_domain.'/'.$user);
-			
+
 			if(($user_search == '0') || ($user_flagged == '1')) {
 				$class_link = 'locked';
-				
+
 				if($user_flagged == '1')
 					$title_link = 'Your profile has been reported as inapropriate for children. For safety reasons, search engines cannot index it. Click here to check what Google knows about you »';
 				else
 					$title_link = 'Search engines cannot access your profile. Only human users can view it, but they cannot find your profile easily. Click here to check what Google knows about you »';
 			}
-			
+
 			else {
 				$class_link = 'unlocked';
 				$title_link = 'Search engines can access your profile. People may find your profile easily. Click here to check what Google knows about you »';
 			}
-			
+
 			echo '<a class="locker '.htmlspecialchars($class_link).'" title="'.htmlspecialchars($title_link).'" href="'.htmlspecialchars($google_link).'" target="_blank"></a>';
-			
+
 			if($cache_date[2] == 0) { ?>
 			<span class="right">Profile is being updated by our bot.</span>
 			<?php } else if($cache_date[2] <= 24) { ?>
@@ -436,13 +436,13 @@ if($page == '404') {
 			<a class="facebook" href="http://www.facebook.com/jappix" title="Follow us on Facebook!"></a>
 			<a class="twitter" href="http://twitter.com/jappixorg" title="Follow us on Twitter!"></a>
 		</span>
-		
+
 		<span class="right"><a class="logo" href="https://jappix.com/">Jappix</a> - <a href="https://me.jappix.com/">Jappix Me</a> - <a href="https://jappix.pro/">Jappix Pro</a> - <a href="https://jappix.org/">Jappix Download</a> - <a href="https://jappix.net/">Jappix Network</a></span>
 		<?php } ?>
 		<div class="clear"></div>
 	</div>
 	<?php } ?>
-	
+
 	<!-- BEGIN CONFIG -->
 	<div id="config">
 		<input type="hidden" name="bot-domain" value="<?php echo getConfig('bot', 'domain'); ?>" />
@@ -457,14 +457,14 @@ if($page == '404') {
 	<!-- BEGIN ANALYTICS -->
 		<script type="text/javascript">
 			var pkBaseURL = (("https:" == document.location.protocol) ? "https://<?php echo getConfig('analytics', 'server'); ?>/" : "http://<?php echo getConfig('analytics', 'server'); ?>/");
-			
+
 			document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 		</script>
-		
+
 		<script type="text/javascript">
 			try {
 				var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", <?php echo getConfig('analytics', 'id'); ?>);
-				
+
 				piwikTracker.trackPageView();
 				piwikTracker.enableLinkTracking();
 			} catch(err) {}

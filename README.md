@@ -4,7 +4,7 @@ Jappix Me - Your public profile, anywhere
 Jappix Me, the very first XMPP public profile viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
 
-[![build status](https://ci.frenchtouch.pro/projects/12/status.png?ref=master)](https://ci.frenchtouch.pro/projects/12?ref=master)
+[![build status](https://ci.hakuma.holdings/projects/12/status.png?ref=master)](https://ci.hakuma.holdings/projects/12?ref=master)
 
 
 License
@@ -39,7 +39,7 @@ Mirrors
 
 In case GitHub is down, here is a list of available mirrors:
 
-* Git read-only mirror: git clone https://code.frenchtouch.pro/jappix/jappix-me.git
+* Git read-only mirror: git clone https://code.hakuma.holdings/jappix/jappix-me.git
 
 
 MUC Links
