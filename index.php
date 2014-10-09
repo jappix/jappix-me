@@ -404,7 +404,7 @@ if($page == '404') {
 
 	<?php if(($page == 'home') || ($page == 'user') || ($page == 'new') || ($page == 'privacy')) { ?>
 	<div id="foot" class="wrapped">
-		<span><b><a href="https://project.jappix.com/contact">Contact</a></b> - <b><a href="https://legal.jappix.com/">Legal</a></b> - © 2011-<?php echo(date('Y')); ?> <a href="https://hakuma.holdings/">Hakuma Holdings</a>, Inc.</span>
+		<span><b><a href="https://project.jappix.com/contact">Contact</a></b> - <b><a href="https://legal.jappix.com/">Legal</a></b> - © 2011-<?php echo(date('Y')); ?> <a href="https://hakuma.holdings/">Hakuma Holdings, Inc.</a></span>
 		<?php if($page == 'user') {
 			$google_link = 'https://www.google.com/search?q='.rawurlencode('site:'.$path_root_domain.'/'.$user);
 
