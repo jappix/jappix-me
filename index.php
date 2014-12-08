@@ -437,7 +437,7 @@ if($page == '404') {
 			<a class="twitter" href="http://twitter.com/jappixorg" title="Follow us on Twitter!"></a>
 		</span>
 
-		<span class="right"><a class="logo" href="https://jappix.com/">Jappix</a> - <a href="https://me.jappix.com/">Jappix Me</a> - <a href="https://jappix.pro/">Jappix Pro</a> - <a href="https://jappix.org/">Jappix Download</a> - <a href="https://jappix.net/">Jappix Network</a></span>
+		<span class="right"><a class="logo" href="https://jappix.com/">Jappix</a> - <a href="https://me.jappix.com/">Jappix Me</a> - <a href="https://business.jappix.org/">Jappix Business</a> - <a href="https://jappix.org/">Jappix Download</a> - <a href="https://network.jappix.org/">Jappix Network</a></span>
 		<?php } ?>
 		<div class="clear"></div>
 	</div>
