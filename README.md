@@ -4,7 +4,7 @@ Jappix Me - Your public profile, anywhere
 Jappix Me, the very first XMPP public profile viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
 
-[![build status](https://ci.hakuma.holdings/projects/12/status.png?ref=master)](https://ci.hakuma.holdings/projects/12?ref=master)
+[![Build Status](https://semaphoreci.com/api/v1/projects/5d331f0d-adc3-48cd-ad59-0359adca6fd6/376006/shields_badge.svg)](https://semaphoreci.com/valeriansaliou/jappix-me)
 
 
 License
