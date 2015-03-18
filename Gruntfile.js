@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     csslint: {
       all: {
         options: {
-          /* 
+          /*
            * CSS Lint Options
            * Reference: https://github.com/gruntjs/grunt-contrib-csslint/blob/master/README.md#options
            */
@@ -41,11 +41,11 @@ module.exports = function(grunt) {
         },
 
         src: [
-          '../css/*.css',
+          './css/*.css',
 
           // Ignored files
-          '!../app/stylesheets/ie6.css',
-          '!../app/stylesheets/ie7.css'
+          '!./app/stylesheets/ie6.css',
+          '!./app/stylesheets/ie7.css'
         ]
       }
     },
@@ -53,15 +53,15 @@ module.exports = function(grunt) {
 
     // Task: JSHint
     jshint: {
-      files: ['../js/*.js']
+      files: ['./js/*.js']
     },
 
 
     // Task PHPLint
     phplint: {
       all: [
-        '../index.php',
-        '../php/*.php'
+        './index.php',
+        './php/*.php'
       ]
     }
   });
