@@ -1,6 +1,8 @@
 Jappix Me - Your public profile, anywhere
 =========================================
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jappix/jappix-me?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Jappix Me, the very first XMPP public profile viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
 
