@@ -36,14 +36,6 @@ Links
 * Jappix official support: https://business.jappix.org/
 
 
-Mirrors
--------
-
-In case GitHub is down, here is a list of available mirrors:
-
-* Git read-only mirror: git clone https://code.hakuma.holdings/jappix/jappix-me.git
-
-
 MUC Links
 ---------
 
