@@ -9,9 +9,3 @@ Founders
 
 * Valérian Saliou
 * Julien Barrier
-
-
-Organizations
--------------
-
-* Hakuma Holdings Ltd.
