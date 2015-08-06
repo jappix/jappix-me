@@ -497,6 +497,7 @@ if __name__ == '__main__':
     def _runtests():
         import doctest
         import collections
+
         # make the unittests pass on old pythons
         if not hasattr(collections, 'OrderedDict'):
             class _ODict(list):
