@@ -30,7 +30,6 @@ Links
 -----
 
 * Jappix Me official service: https://me.jappix.com/
-* Jappix official support: https://business.jappix.org/
 
 
 MUC Links
