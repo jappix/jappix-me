@@ -30,10 +30,3 @@ Links
 -----
 
 * Jappix Me official service: https://me.jappix.com/
-
-
-MUC Links
----------
-
-* Jappix.org support room: https://jappix.com/?r=support@muc.jappix.org
-* Jappix.org dev-talk room: https://jappix.com/?r=dev@muc.jappix.org
