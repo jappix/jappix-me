@@ -3,6 +3,8 @@ Jappix Me - Your public profile, anywhere
 
 [![Build Status](https://travis-ci.org/jappix/jappix-me.svg?branch=master)](https://travis-ci.org/jappix/jappix-me) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jappix/jappix-me?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+**Notice: the Jappix project is no longer maintained. We still accept PR (Pull Requests) though.**
+
 Jappix Me, an XMPP public profile Web viewer. Support for Microblog, Comments, vCard, Avatars & Bio.
 
 
